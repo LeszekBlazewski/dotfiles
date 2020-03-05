@@ -19,4 +19,4 @@ Components:
 * kitty
 * rofi
 * [spicetify](https://github.com/khanhas/spicetify-cli)
-* [spicetify-themes] (https://github.com/morpheusthewhite/spicetify-themes)
+* [spicetify-themes](https://github.com/morpheusthewhite/spicetify-themes)
