@@ -12,7 +12,7 @@ Screenshot:
 
 Components:
 
-* Polybar
+* polybar
 * compton-rounded-corners
 * vs code nordic theme
 * powerline10k
