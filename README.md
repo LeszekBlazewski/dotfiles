@@ -18,3 +18,5 @@ Components:
 * powerline10k
 * kitty
 * rofi
+* spicetify
+* spicetify-themes
