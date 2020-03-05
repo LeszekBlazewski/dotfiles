@@ -14,9 +14,9 @@ Components:
 
 * Polybar
 * compton-rounded-corners
-* vs code nordic
+* vs code nordic theme
 * powerline10k
 * kitty
 * rofi
-* spicetify
-* spicetify-themes
+* [spicetify](https://github.com/khanhas/spicetify-cli)
+* [spicetify-themes] (https://github.com/morpheusthewhite/spicetify-themes)
