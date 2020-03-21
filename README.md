@@ -1,6 +1,6 @@
 # dotfiles
-Dotfiles for various themes mostly gathered from others :D 
 
+Dotfiles for various themes mostly gathered from others :D
 
 ## i3-nord
 
@@ -12,11 +12,12 @@ Screenshot:
 
 Components:
 
-* polybar
-* compton-rounded-corners
-* vs code nordic theme
-* powerline10k
-* kitty
-* rofi
-* [spicetify](https://github.com/khanhas/spicetify-cli)
-* [spicetify-themes](https://github.com/morpheusthewhite/spicetify-themes)
+- polybar
+- compton-rounded-corners
+- vs code nordic theme
+- powerline10k
+- kitty
+- rofi
+- [spicetify](https://github.com/khanhas/spicetify-cli)
+- [spicetify-themes](https://github.com/morpheusthewhite/spicetify-themes)
+- [multilockscreen](https://github.com/jeffmhubbard/multilockscreen)

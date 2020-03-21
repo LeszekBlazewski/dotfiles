@@ -1,0 +1,72 @@
+{
+  "editor.renderWhitespace": "all", 
+  "workbench.colorTheme": "Nord",
+  "window.titleBarStyle": "custom",
+  "terminal.integrated.shell.linux": "/bin/zsh",
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "explorer.confirmDelete": false,
+  "python.linting.pylintEnabled": false,
+  "python.linting.enabled": true,
+  "python.formatting.provider": "black",
+  "python.linting.mypyEnabled": true,
+  "python.linting.flake8Enabled": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    // For ESLint
+    "source.fixAll.eslint": true,
+    // For TSLint
+    "source.fixAll.tslint": true,
+    // For Stylelint
+    "source.fixAll.stylelint": true
+  },
+  "editor.rulers": [79],
+  "git.autofetch": true,
+  "editor.mouseWheelZoom": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": true,
+  "explorer.confirmDragAndDrop": false,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "line",
+  "editor.acceptSuggestionOnEnter": "smart",
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "workbench.colorCustomizations": {
+    "activityBarBadge.background": "#5C6BC0",
+    "activityBar.activeBorder": "#5C6BC0",
+    "list.activeSelectionForeground": "#5C6BC0",
+    "list.inactiveSelectionForeground": "#5C6BC0",
+    "list.highlightForeground": "#5C6BC0",
+    "scrollbarSlider.activeBackground": "#5C6BC050",
+    "editorSuggestWidget.highlightForeground": "#5C6BC0",
+    "textLink.foreground": "#5C6BC0",
+    "progressBar.background": "#5C6BC0",
+    "pickerGroup.foreground": "#5C6BC0",
+    "tab.activeBorder": "#5C6BC0",
+    "notificationLink.foreground": "#5C6BC0",
+    "editorWidget.resizeBorder": "#5C6BC0",
+    "editorWidget.border": "#5C6BC0",
+    "settings.modifiedItemIndicator": "#5C6BC0",
+    "settings.headerForeground": "#5C6BC0",
+    "panelTitle.activeBorder": "#5C6BC0",
+    "breadcrumb.activeSelectionForeground": "#5C6BC0",
+    "menu.selectionForeground": "#5C6BC0",
+    "menubar.selectionForeground": "#5C6BC0",
+    "editor.findMatchBorder": "#5C6BC0",
+    "selection.background": "#5C6BC040"
+  },
+  "editor.fontWeight": "600",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "sync.gist": "975b9ccfcc64979b4c593f847efd53c7",
+  "terminal.integrated.fontFamily": "Hack Nerd Font",
+  "terminal.integrated.rendererType": "canvas",
+  "workbench.iconTheme": "material-icon-theme",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
