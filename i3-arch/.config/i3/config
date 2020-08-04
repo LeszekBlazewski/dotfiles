@@ -1,0 +1,178 @@
+set $mod Mod4
+
+# set keyboard layout
+#exec "setxkbmap -layout sv"
+
+#####################[WINDOWS AND WORKSPACES]#######################
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+focus_follows_mouse no
+
+#set the gaps
+gaps inner 15
+
+for_window [class="mpv"] floating enable
+for_window [class=".*"] border pixel 0
+
+for_window [instance="origin.exe"] floating enable
+smart_borders on
+smart_gaps on
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# Move focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# split toggle
+bindsym $mod+q split toggle
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# PageUp & PageDown
+bindsym $mod+Prior workspace prev
+bindsym $mod+Next workspace next
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# resize window (you can also use the mouse for that)
+bindsym MOD1+Left resize shrink width 2 px or 2 ppt
+bindsym MOD1+Down resize shrink height 2 px or 2 ppt
+bindsym MOD1+Up resize grow height 2 px or 2 ppt
+bindsym MOD1+Right resize grow width 2 px or 2 ppt
+
+#styling (for non-tiled windows)
+font pango: FreeSans 13
+ # class                 border  backgr. text    indicator
+    client.focused          #444444 #444444 #444444 #444444
+    client.focused_inactive #333333 #333333 #333333 #333333
+    client.unfocused        #333333 #333333 #333333 #333333
+    client.urgent           #333333 #333333 #333333 #333333
+    client.placeholder      #333333 #333333 #333333 #333333
+
+    new_window 1pixel
+###############[KEYBINDINGS]##################
+#show notification center
+bindsym $mod+p exec "kill -s USR1 $(pidof deadd-notification-center)"
+
+# start a terminal
+bindsym $mod+Return exec "kitty"
+
+# open rofi
+bindsym $mod+d exec "rofi -show drun"
+
+# Sound output
+bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute 0 toggle # mute sound
+
+#Sound input
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 1 toggle
+
+# Sleep key
+bindsym XF86Sleep exec --no-startup-id systemctl suspend
+
+# Screen brightness controls
+bindsym XF86MonBrightnessUp exec  --no-startup-id light -A 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec  --no-startup-id light -20 # decrease screen brightness
+
+# Mouse
+bindsym button2 kill
+
+# Lock screen
+bindsym $mod+Delete exec --no-startup-id multilockscreen -l
+exec --no-startup-id xautolock -time 10 -locker 'multilockscreen -l' &
+
+############[OTHER STUFF]##################
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec --no-startup-id \
+	"i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Shutdown' 'systemctl poweroff' -b 'Reboot' 'systemctl reboot' -b 'Logout' 'i3-msg exit'"
+
+# Open firefox
+bindsym $mod+F1 exec --no-startup-id firefox
+
+#Open thunar
+bindsym $mod+F2 exec --no-startup-id thunar
+
+#Open discord
+bindsym $mod+F3 exec --no-startup-id discord
+
+#Open spotify
+bindsym $mod+F4 exec --no-startup-id spotify
+
+# Screenshots
+bindsym Print exec "flameshot screen -c -p ~/pictures"
+bindsym $mod+Shift+Print exec "flameshot gui -p ~/pictures"
+
+
+#####################[STARTUP]#####################
+
+exec_always --no-startup-id "killall -q deadd-notification-center"
+exec_always --no-startup-id "~/.config/i3/start_picom.sh"
+exec_always --no-startup-id "~/.config/polybar/launch.sh"
+exec_always  --no-startup-id "nm-applet"
+exec_always --no-startup-id "blueman-applet"
+exec_always --no-startup-id "picom"
+exec_always  --no-startup-id "deadd-notification-center"
+exec_always --no-startup-id $HOME/.config/monitors/left-monitor.sh

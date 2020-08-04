@@ -1,0 +1,16 @@
+/*DEAD NOTIFICATION CENTER*/
+image.deadd-noti-center.notification.icon,
+label.deadd-noti-center.notification.appname,
+image.deadd-noti-center.in-center.icon,
+label.deadd-noti-center.in-center.appname {
+    opacity: 0
+}
+
+label.deadd-noti-center.time{
+	font-family: Product Sans;
+}
+
+button.deadd-noti-center.in-center.button-close{
+	font-size: 22px;
+	font-family: Product Sans;
+}
