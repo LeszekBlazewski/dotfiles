@@ -101,9 +101,7 @@ label-urgent-padding = 2
 type = custom/script
 exec = ~/.config/polybar/scripts/player-status.sh
 interval = 1
-click-right = playerctl play-pause &
-; My music player control thing made in rofi, definatly a work in progress:
-click-left = ~/.config/rofi/music_menu
+click-left = playerctl play-pause &
 label = %output%
 label-maxlen = 40
 label-underline = ${color.green}
