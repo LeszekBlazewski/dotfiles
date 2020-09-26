@@ -162,8 +162,7 @@ bindsym $mod+F3 exec --no-startup-id discord
 bindsym $mod+F4 exec --no-startup-id spotify
 
 # Screenshots
-bindsym Print exec "flameshot screen -c -p ~/pictures"
-bindsym $mod+Shift+Print exec "flameshot gui -p ~/pictures"
+bindsym Print exec --no-startup-id flameshot gui
 
 
 #####################[STARTUP]#####################
@@ -176,3 +175,4 @@ exec_always --no-startup-id "blueman-applet"
 exec_always --no-startup-id "picom"
 exec_always  --no-startup-id "deadd-notification-center"
 exec_always --no-startup-id $HOME/.config/monitors/left-monitor.sh
+exec --no-startup-id lxpolkit /usr/bin/lxpolkit
