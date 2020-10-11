@@ -150,7 +150,7 @@ bindsym $mod+Shift+e exec --no-startup-id \
 	"i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Shutdown' 'systemctl poweroff' -b 'Reboot' 'systemctl reboot' -b 'Logout' 'i3-msg exit'"
 
 # Open firefox
-bindsym $mod+F1 exec --no-startup-id firefox
+bindsym $mod+F1 exec --no-startup-id google-chrome-stable
 
 #Open thunar
 bindsym $mod+F2 exec --no-startup-id thunar
