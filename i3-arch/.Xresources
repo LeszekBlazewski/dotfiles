@@ -1,0 +1,40 @@
+! special
+*.foreground:   #dcdcdc
+*.background:   #333333
+*.cursorColor:  #dcdcdc
+
+! black
+*.color0:       #444444
+*.color8:       #444444
+
+! red
+*.color1:       #E55039
+*.color9:       #E55039
+
+! green
+*.color2:       #B8E994
+*.color10:      #B8E994
+
+! yellow
+*.color3:       #feb652
+*.color11:      #feb652
+
+! blue
+*.color4:       #6A89CC
+*.color12:      #6A89CC
+
+! magenta
+*.color5:       #FDA7DF
+*.color13:      #FDA7DF
+
+! cyan
+*.color6:       #82CCDD
+*.color14:      #82CCDD
+
+! white
+*.color7:        #ffffff
+*.color15:       #ffffff
+
+
+xterm*faceName: "Liga Source Code Pro Medium"
+xterm*faceSize: 12
