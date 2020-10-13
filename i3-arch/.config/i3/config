@@ -112,6 +112,8 @@ bindsym $mod+n exec "kill -s USR1 $(pidof deadd-notification-center)"
 
 # start a terminal
 bindsym $mod+Return exec "kitty"
+# start xterm terminal
+bindsym $mod+Shift+Return exec "xterm"
 
 # open rofi
 bindsym $mod+d exec "rofi -show drun"
