@@ -174,10 +174,10 @@ bindsym $mod+p move workspace to output right
 
 exec_always --no-startup-id "killall -q deadd-notification-center"
 exec_always --no-startup-id "~/.config/i3/start_picom.sh"
-exec_always --no-startup-id "~/.config/polybar/launch.sh"
 exec_always  --no-startup-id "nm-applet"
 exec_always --no-startup-id "blueman-applet"
 exec_always --no-startup-id "picom"
 exec_always  --no-startup-id "deadd-notification-center"
-exec_always --no-startup-id $HOME/.config/monitors/left-monitor.sh
+exec_always --no-startup-id $HOME/.config/monitors/right-monitor.sh
+exec_always --no-startup-id "~/.config/polybar/launch.sh"
 exec --no-startup-id lxpolkit /usr/bin/lxpolkit
