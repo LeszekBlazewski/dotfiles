@@ -32,4 +32,9 @@ Components:
 - [zsh bubbly](https://github.com/hohmannr/bubblified)
 - [multilockscreen](https://github.com/jeffmhubbard/multilockscreen)
 
+Problems:
+
+- Kitty terminal sucks for SSH
+- This ZSH theme does not work with visual studio code
+
 ![screenshot](/i3-arch/arch-i3.png)
