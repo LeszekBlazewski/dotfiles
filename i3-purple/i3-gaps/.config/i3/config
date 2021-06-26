@@ -1,0 +1,318 @@
+#===============================================================
+#   
+#
+#   ██╗ █████╗          █████╗  █████╗ ██████╗  █████╗ 
+#   ╚═╝██╔══██╗        ██╔═══╝ ██╔══██╗██╔══██╗███╔══█╗
+#   ██╗╚═╝███╔╝ █████╗ ██║███╗ ███████║██████╔╝╚█████╚╝
+#   ██║██ ╚═██╗ ╚════╝ ██║╚═██╗██╔══██║██╔═══╝ █╗  ███╗
+#   ██║╚█████╔╝        ╚█████╔╝██║  ██║██║     ╚█████╔╝
+#   ╚═╝ ╚════╝          ╚════╝ ╚═╝  ╚═╝╚═╝      ╚════╝ 
+#   
+#   
+#   i3-gaps configuration by adipopbv (adi.pop.bv@gmail.com).
+#   ~/.config/i3/config - i3-gaps settings file.
+#   Go to https://i3wm.org/docs/ for more info.
+#   
+#   
+#===============================================================
+
+# i3 config file (v4)
+
+# ===== Variables =====
+
+# Setting mod key to windows/super key (Mod4)
+set $mod Mod4
+# Use Mouse+$mod to drag floating windows
+floating_modifier $mod
+
+# Setting the app launcher to rofi
+set $launcher rofi -show drun
+# Setting the status bar to polybar
+set $bar $HOME/.config/polybar/launch-polybar.sh
+# Setting the compositor to compton-tryone
+set $compositor $HOME/.config/compton/launch-compton.sh
+# Setting notification system to dunst
+set $notifications $HOME/.config/dunst/launch-dunst.sh
+# Setting the wallpaper
+set $wallpaper $HOME/.config/wallpaper/wallpaper.jpg
+# Setting the audio controller app
+set $audioctl pavucontrol
+
+# Screens variable names
+set $scr1 eDp-1
+set $scr2 HDMI-2
+
+# Colors
+set $black     "#000000"
+set $darkgrey  "#292929"
+set $grey      "#757575"
+set $lightgrey "#BABABA"
+set $blue      "#5D82A8"
+set $lightblue "#8096AC"
+
+# Corners
+# border_radius 10
+
+# ===== Windows & Containers =====
+
+# Window aesthetic settings
+# 	Font for window titles
+font pango:Noto Sans Regular 14
+# 	Hide window title bars
+for_window [class="^.*"] border pixel 0
+# 	Window colors
+# 	<colorclass>        <border>     <background> <text>       <indicator>
+# 		Currently focused window
+client.focused          $black       $lightgrey   $black       $blue
+# 		Focused window from the other containers
+client.focused_inactive $black       $grey        $black       $lightblue
+# 		Unfocused windows
+client.unfocused        $black       $darkgrey    $black       $darkgrey
+# 		Unfocused windows with urgency hint active
+client.urgent           $black       $blue        $black       $black
+
+# ===== Workspaces =====
+
+# Asssign apps to always open in certain workspaces
+# 	Web
+# assign [class="Nightly"] $wsp1
+# 	Programming
+# assign [class="jetbrains-idea"] $wsp3
+# 	Social
+# assign [class="discord"] $wsp4
+# assign [class="Microsoft Teams - Preview"] $wsp4
+# 	Music
+# for_window [class="Spotify"] move to workspace $wsp5
+
+# ===== Programs =====
+
+# Execute commands
+# 	Adjust screens settings
+exec_always --no-startup-id xrandr --output eDP-1 --mode 1920x1080
+exec_always --no-startup-id xrandr --output HDMI-2 --mode 1920x1080 --rate 60 --right-of eDP-1
+# 	Start the compositor
+exec_always --no-startup-id $compositor
+# 	Start status bar
+exec_always --no-startup-id $bar
+# 	Set wallpaper
+exec_always --no-startup-id feh --bg-fill $wallpaper
+# 	Hides the cursor when is not needed
+# exec unclutter -root
+# 	Disables the middle mouse paste functionality
+# exec xmousepasteblock
+# 	Start notifications service
+exec_always --no-startup-id $notifications
+
+# Applets
+exec_always  --no-startup-id "nm-applet"
+exec_always --no-startup-id "blueman-applet"
+
+# Execute programs in floating windows
+# 	Apps made with my cpp-proj utilities
+for_window [class=".*-custom-class-here"] floating enabled
+
+# auto name workspace
+exec_always --no-startup-id  "/home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/venv/bin/python3 /home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/autoname_workspaces.py &"
+
+# create new workspace on current monitor
+bindsym $mod+n exec --no-startup-id  "/home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/venv/bin/python3 /home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/new_workspace.py &"
+
+
+# ===== Devices =====
+
+# Touchpad properties
+#  ximput set-prop <device> <property> <value>
+# 	Touch click
+exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "tapping enabled (" | awk '{print $4}' | grep -o "[0-9][0-9][0-9]") 1
+# 	Natural scrolling
+exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "natural scrolling enabled (" | awk '{print $5}' | grep -o "[0-9][0-9][0-9]") 1 
+# 	Cursor speed
+exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "accel speed (" | awk '{print $4}' | grep -o "[0-9][0-9][0-9]") 0.60 
+# 	Disable touchpad if mouse is plugged in with touchpad-indicator
+# exec_always --no-startup-id touchpad-indicator
+
+# ===== Bindings =====
+
+# Essential apps
+# 	Start a terminal emulator instance
+bindsym $mod+Return exec --no-startup-id kitty
+# 	Start the app launcher
+bindsym $mod+d exec --no-startup-id $launcher
+# 	Start the audio controlls
+bindsym $mod+p exec --no-startup-id $audioctl
+# 	Start the web browser
+bindsym $mod+F1 exec --no-startup-id google-chrome-stable
+# 	Start the file explorer
+bindsym $mod+F2 exec --no-startup-id nautilus
+# Start Discord
+bindsym $mod+F3 exec --no-startup-id discord
+# Start Spotify
+bindsym $mod+F4 exec --no-startup-id spotify
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Windows functional settings
+# 	Change window focus
+# 		Normal
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+# 	Move focused window
+# 		Normal
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+# 	Split toggle
+bindsym $mod+q split toggle
+# 	Enter fullscreen mode for the focused window
+bindsym $mod+f fullscreen toggle
+# 	Layout toggle split
+bindsym $mod+s layout toggle split
+# 	Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+# 	Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+# 	Resize window (you can also use the mouse for that)
+mode "resize" {
+	# Normal
+	bindsym Left resize grow left 2 px or 2 ppt
+	bindsym Down resize grow down 2 px or 2 ppt
+	bindsym Up resize grow up 2 px or 2 ppt
+	bindsym Right resize grow right 2 px or 2 ppt
+
+	bindsym Shift+Left resize shrink left 2 px or 2 ppt
+	bindsym Shift+Down resize shrink down 2 px or 2 ppt
+	bindsym Shift+Up resize shrink up 2 px or 2 ppt
+	bindsym Shift+Right resize shrink right 2 px or 2 ppt
+
+	bindsym Ctrl+Left resize grow left 1 px
+	bindsym Ctrl+Down resize grow down 1 px
+	bindsym Ctrl+Up resize grow up 1 px
+	bindsym Ctrl+Right resize grow right 1 px
+
+	bindsym Ctrl+Shift+Left resize shrink left 1 px
+	bindsym Ctrl+Shift+Down resize shrink down 1 px
+	bindsym Ctrl+Shift+Up resize shrink up 1 px
+	bindsym Ctrl+Shift+Right resize shrink right 1 px
+
+	# Back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+# 	Start resizing mode
+bindsym $mod+r mode "resize"
+
+# Workspaces functional settings
+# 	Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+# 	Move focused window to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# Screen functional settings
+# 	Change screen focus
+# 		Normal
+bindsym $mod+Ctrl+Left  focus output left
+bindsym $mod+Ctrl+Down  focus output down
+bindsym $mod+Ctrl+Up    focus output up
+bindsym $mod+Ctrl+Right focus output right
+# 	Move focused workspace to screen
+# 		Normal
+bindsym $mod+Ctrl+Shift+Left  move workspace to output left
+bindsym $mod+Ctrl+Shift+Down  move workspace to output down
+bindsym $mod+Ctrl+Shift+Up    move workspace to output up
+bindsym $mod+Ctrl+Shift+Right move workspace to output right
+
+# i3wm misc
+# 	Reload the configuration file
+bindsym $mod+Shift+c reload
+# 	Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# 	Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar --type warning --font 'pango:Noto Sans Regular 10' --message 'Do you really want to exit i3? This will end your X session.' --button 'Yes' 'i3-msg exit'"
+
+# Other binds
+# 	Screenshots
+bindsym Print exec --no-startup-id flameshot gui
+# 	Brightness
+# 		Up
+bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 10
+# 		Down
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
+# 	Volume
+bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume 0 -5%
+# 		Mute audio
+bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute 0 toggle # mute sound
+# 		Mute microphone
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
+
+
+
+# ===== i3-gaps specific =====
+
+# Gaps sizes
+# 	Set inner gaps
+gaps inner 10
+# 	Set outer gaps
+# gaps outer 0
+
+# Gaps for status bar
+# gaps top 0
+
+smart_borders on
+smart_gaps on
+
+# Gaps adjusting mode
+mode "gaps" {
+	# Adjust inner gap size
+	# 	Normal
+	bindsym Down gaps inner current minus 5
+	bindsym Shift+Down gaps inner current minus 15
+	bindsym Up gaps inner current plus 5
+	bindsym Shift+Up gaps inner current plus 15
+
+	# Adjust outer gaps size
+	# 	Normal
+	bindsym o gaps outer current plus 5
+	bindsym i gaps outer current minus 5
+	# 	Bigger
+	bindsym Shift+o gaps outer current plus 15
+	bindsym Shift+i gaps outer current minus 15
+
+	# Set all gaps to 0
+	bindsym 0 gaps inner current set 0; gaps outer current set 0
+
+	# Back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+# 	Start gaps adjusting mode
+bindsym $mod+g mode "gaps"
+
+for_window [class="^.*"] border pixel 2
+
+client.focused #BD93f9 #BD93f9 #000088 #BD93f9
+client.focused_inactive #282a36 #282a36 #ffffff #282a36 
+client.unfocused #282a36 #282a36 #ffffff #282a36 
+client.urgent #BD93f9 #BD93f9 #000088 #BD93f9

@@ -1,0 +1,60 @@
+/*
+*==================================================================
+* 
+*
+*   ██████╗  █████╗ ███████╗██╗
+*   ██╔══██╗██╔══██╗██╔════╝╚═╝
+*   ██████╔╝██║  ██║█████╗  ██╗
+*   ██╔══██╗██║  ██║██╔══╝  ██║
+*   ██║  ██║╚█████╔╝██║     ██║
+*   ╚═╝  ╚═╝ ╚════╝ ╚═╝     ╚═╝
+*
+*
+*   rofi configuration by adipopbv (adi.pop.bv@gmail.com).
+*   ~/.config/rofi/liquid-amethyst.rasi - rofi theme config file.
+*   Go to https://github.com/davatorium/rofi/wiki for more info.
+*
+*
+*==================================================================
+*/
+
+configuration {
+	modi: "window,run,ssh,drun";
+	width: 30;
+	lines: 10;
+	columns: 1;
+	font: "Noto Sans 12";
+	location: 0;
+	padding: 8;
+	yoffset: 0;
+	xoffset: 0;
+	fixed-num-lines: true;
+	show-icons: true;
+	terminal: "kitty";
+	ssh-client: "ssh";
+	ssh-command: "{terminal} {ssh-client} {host}";
+	run-command: "{cmd}";
+	run-list-command: "";
+	run-shell-command: "{terminal} {cmd}";
+	window-command: "xkill -id {window}";
+	window-match-fields: "all";
+	drun-icon-theme: "Dracula";
+	drun-match-fields: "name,generic,exec,categories";
+	disable-history: false;
+	sort: true;
+	levenshtein-sort: false;
+	case-sensitive: false;
+	cycle: true;
+	sidebar-mode: true;
+	auto-select: true;
+	line-margin: 3;
+	line-padding: 3;
+	separator-style: "solid";
+	hide-scrollbar: false;
+	fullscreen: false;
+	click-to-exit: true;
+	show-match: true;
+	theme: "liquid-amethyst";
+	max-history-size: 25;
+	kb-primary-paste: "Control+V";
+}
