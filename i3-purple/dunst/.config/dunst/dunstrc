@@ -33,7 +33,7 @@
     # 	Show how many messages are currently hidden (because of geometry)
     indicate_hidden = yes
     # 	Shrink window if it's smaller than the width
-    shrink = no
+    shrink = false
     # 	The transparency of the window (range 0 to 100)
     transparency = 0
     # 	The height of the entire notification
@@ -55,9 +55,9 @@
     # 		anything else will be interpreted as a X color
     separator_color = frame
     # 	Sort messages by urgency.
-    sort = yes
+    sort = true
     # 	Don't remove messages, if the user is idle for longer than idle_threshold seconds
-    idle_threshold = 60
+    idle_threshold = 120
 
     # Text
 	# 	Set font
@@ -85,7 +85,7 @@
     # 		%n  progress value if set without any extra characters
     # 		%%  Literal %
     # 	Markup is allowed
-    format = "<b>%a</b> %s"
+    format = "<b>%s</b>\n%b"
     # 	Alignment of message text
     # 		Possible values are "left", "center" and "right"
     alignment = center
@@ -96,10 +96,10 @@
     # 		Set to -1 to disable
     show_age_threshold = 60
     # 	Split notifications into multiple lines if they don't fit into geometry
-    word_wrap = yes
+    word_wrap = true
     # 	When word_wrap is set to no, specify where to make an ellipsis in long lines
     # 		Possible values are "start", "middle" and "end"
-    ellipsize = middle
+    # ellipsize = middle
     # 	Ignore newlines '\n' in notifications
     ignore_newline = no
     # 	Stack together notifications with the same content
@@ -117,13 +117,13 @@
     # 	Scale larger icons down to this size, set to 0 to disable
     max_icon_size = 32
     # 	Paths to default icons.
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
-
+    icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/:/usr/share/icons/Adwaita/16x16/legacy/
+    
     # History
     # 	Should a notification popped up from history be sticky or timeout as if it would normally do
     sticky_history = yes
     # 	Maximum amount of notifications kept in history
-    history_length = 20
+    history_length = 10
 
     # Misc/Advanced
     # 	dmenu path
@@ -183,17 +183,16 @@
 # State specific settings
 # 	Low urgency
 [urgency_low]
-    background = "#50FA7B"
+    background = "#BD93f9"
     foreground = "#1E1F29"
-    timeout = 7
+    timeout = 3
 # 	Normal urgency
 [urgency_normal]
-    background = "#50FA7B"
+    background = "#BD93f9"
     foreground = "#1E1F29"
-    timeout = 10
+    timeout = 3
 # 	Critical urgency
 [urgency_critical]
     background = "#FF5555"
     foreground = "#1E1F29"
     timeout = 0
-

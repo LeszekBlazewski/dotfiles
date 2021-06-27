@@ -29,6 +29,7 @@ zip
 vi
 vim
 visual-studio-code-bin
+breeze-purple-cursor-theme
 xorg-server
 xorg-xinit
 xorg-xinput
