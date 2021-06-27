@@ -50,7 +50,7 @@ loadkeys us
 KEY_MAP="us"
 
 # synchronize pacman database and install dialog
-$CHROOT pacman --noconfirm -Sy dialog
+pacman --noconfirm -Sy dialog
 
 # window
 title="Keymap Selection"
