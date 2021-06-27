@@ -34,10 +34,31 @@ Components:
 
 Problems:
 
-- Kitty terminal sucks for SSH
 - This ZSH theme does not work with visual studio code
 
 ![screenshot](/i3-orange/arch-i3.png)
+
+## i3-purple
+
+**This is the only instalation which is fully automated via dotfiles and is used in install-i3.script**
+
+Components:
+
+- dunst
+- lightdm
+- nautilus
+- polybar
+- rofi
+- kitty
+- starship prompt
+- [Dracula GTK theme + icons](https://draculatheme.com/gtk)
+- [autonameworkspace for i3](https://github.com/justbuchanan/i3scripts)
+
+![screenshot](/i3-purple/i3-purple.png)
+
+
+## Arch linux automatic installer for i3-purple setup
+
 
 <h2 align="center">
   <br>
@@ -53,12 +74,13 @@ Arch Linux Installer
   <a href="#how-to-use">How To Use</a>
 </p>
 
+All credits go to https://github.com/si9ma/Archlinux-Installer
+
 ## Features
 
 - Pseudo interface, more friendly than pure command line.
 - Support BIOS and UEFI boot mode
 - Automatically detect Windows startup option
-- Allows to automaticaly install && configure from backup user packages after system configuration.
 
 ## How To Use
 
@@ -70,7 +92,9 @@ Use this Installer in order to get minimal arch setup
 bash <(curl https://raw.githubusercontent.com/beard/dotfiles/master/install-arch.sh)
 ```
 
-Set keyboard layout to pl
+During installation set:
+
+Set vconsole keyboard layout to pl
 
 Set locale as en_DK.UTF-8 UTF-8
 
