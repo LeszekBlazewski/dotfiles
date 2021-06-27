@@ -196,6 +196,12 @@ interval = 2
 format-prefix = "MEM  "
 label = %percentage_used%%
 
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU  "
+label = %percentage:2%%
+
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
@@ -207,11 +213,6 @@ label =  %temperature-c%
 label-warn = !!  %temperature-c%
 label-warn-foreground = #f00
 
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = "CPU  "
-label = %percentage:2%%
 
 [module/battery]
 type = internal/battery
@@ -254,6 +255,20 @@ animation-charging-3 = 
 animation-charging-4 = 
 animation-charging-framerate = 250
 
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+; Enable changing the backlight with the scroll wheel
+enable-scroll = true
+format = <ramp> <label>
+label = %percentage%%
+; Only applies if <ramp> is used
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
 ; Show volume
 [module/volume]
 type = internal/pulseaudio
@@ -277,17 +292,3 @@ format-muted-padding = 0
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-
-[module/backlight]
-type = internal/backlight
-card = intel_backlight
-; Enable changing the backlight with the scroll wheel
-enable-scroll = true
-format = <ramp> <label>
-label = %percentage%%
-; Only applies if <ramp> is used
-ramp-0 = 🌕
-ramp-1 = 🌔
-ramp-2 = 🌓
-ramp-3 = 🌒
-ramp-4 = 🌑

@@ -13,13 +13,13 @@
 *   rofi configuration by adipopbv (adi.pop.bv@gmail.com).
 *   ~/.config/rofi/liquid-amethyst.rasi - rofi theme config file.
 *   Go to https://github.com/davatorium/rofi/wiki for more info.
-*
+*	cycle through windows with ctrl+Tab
 *
 *==================================================================
 */
 
 configuration {
-	modi: "window,run,ssh,drun";
+	modi: "window,ssh,drun";
 	width: 30;
 	lines: 10;
 	columns: 1;

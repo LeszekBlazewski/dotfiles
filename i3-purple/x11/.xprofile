@@ -1,21 +1,11 @@
 #! /bin/bash
 #===================================================================
-#
-#
-#   ██╗  ██╗██╗██╗  ██╗██╗███████╗██████╗  █████╗ 
-#   ╚██╗██╔╝╚═╝███╗ ██║╚═╝╚═██╔══╝██╔══██╗██╔══██╗
-#    ╚███╔╝ ██╗███████║██╗  ██║   ██████╔╝██║  ╚═╝
-#    ██╔██╗ ██║██╔═███║██║  ██║   ██╔══██╗██║  ██╗
-#   ██╔╝╚██╗██║██║ ╚██║██║  ██║   ██║  ██║╚█████╔╝
-#   ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ╚═╝ ╚════╝ 
-#
-#
-# 	.xinitrc configuration by adipopbv (adi.pop.bv@gmail.com).
 # 	~/.xinitrc - X11's xinit sourced file (WM, graphical stuff etc).
 # 	Go to https://wiki.archlinux.org/index.php/Xinit for more info.
 #
-#
+## This file is a copy of .xinitrc because lightdm loads this one instead of .xinitrc
 #===================================================================
+
 
 # Start optimus prime offloading
 # /usr/bin/prime-offload

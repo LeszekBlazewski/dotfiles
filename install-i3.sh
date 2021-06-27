@@ -4,25 +4,40 @@
 ##
 ## use this script to install fully working i3-gaps arch linux
 ## This script does not only installs window manager, but also sound settings, bluetooth etc.
-## use bash <(curl https://raw.githubusercontent.com/beard/dotfiles/master/install-i3.sh)
+## use sudo bash <(curl https://raw.githubusercontent.com/beard/dotfiles/master/install-i3.sh)
+## Run this script as root!
+## When running this script with sudo, all standard commands are executed as root and those with
+## sudo -u $real_user are run with current user privileges
 
 set -euo pipefail
 
+# ref: https://askubuntu.com/questions/425754/how-do-i-run-a-sudo-command-inside-a-script
+if ! [ $(id -u) = 0 ]; then
+   echo "The script need to be run as root." >&2
+   exit 1
+fi
+
+if [ $SUDO_USER ]; then
+    real_user=$SUDO_USER
+else
+    real_user=$(whoami)
+fi
+
 # update packages list
-pacman -Syyu
+pacman --noconfirm -Syyu
 
 #  install git
 pacman --noconfirm -S git
 
 # install yay
-git clone https://aur.archlinux.org/yay-git.git
+sudo -u $real_user git clone https://aur.archlinux.org/yay-git.git
 cd yay-git
-makepkg -si
+sudo -u $real_user makepkg -si
 cd $HOME
 rm -r yay-git
 
 # clone dotefiles repo
-git clone https://github.com/LeszekBlazewski/dotfiles.git
+sudo -u $real_user git clone https://github.com/LeszekBlazewski/dotfiles.git
 cd dotfiles/i3-purple
 
 # install all of the packages from i3-purple setup
@@ -34,45 +49,47 @@ systemctl enable lightdm
 # auto unlock gnome-keyring
 for file in "/etc/pam.d/lightdm" "/etc/pam.d/lightdm-autologin"
 do
-    sudo sed -i 's/-auth/auth/' $file
-    sudo sed -i 's/-session/session/' $file
+    sed -i 's/-auth/auth/' $file
+    sed -i 's/-session/session/' $file
 done
 
-sudo sed -i '3 a auth	  optional	pam_gnome_keyring.so' /etc/pam.d/login
-sudo sed -i '$ a session	  optional	pam_gnome_keyring.so auto_start' /etc/pam.d/login
+sed -i '3 a auth	  optional	pam_gnome_keyring.so' /etc/pam.d/login
+sed -i '$ a session	  optional	pam_gnome_keyring.so auto_start' /etc/pam.d/login
 
 # copy and enable lightdm theme
-sudo cp -a themes/.themes/Dracula /usr/share/themes
-sudo cp -a icons/.icons/Dracula /usr/share/icons
-sudo cp -a wallpaper/.config/wallpaper/wallpaper.jpg /usr/share/wallpapers
-sudo sed -i 's|#background=|background=/usr/share/wallpapers/wallpaper.jpg|' /etc/lightdm/lightdm-gtk-greeter.conf
-sudo sed -i 's|#theme-name=|theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
-sudo sed -i 's|#icon-theme-name=|icon-theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
-sudo sed -i 's/Inherits=Adwaita/Inherits=Breeze_Purple/' /usr/share/icons/default
+cp -a themes/.themes/Dracula /usr/share/themes
+cp -a icons/.icons/Dracula /usr/share/icons
+cp -a wallpaper/.config/wallpaper/wallpaper.jpg /usr/share/wallpapers
+sed -i 's|#background=|background=/usr/share/wallpapers/wallpaper.jpg|' /etc/lightdm/lightdm-gtk-greeter.conf
+sed -i 's|#theme-name=|theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
+sed -i 's|#icon-theme-name=|icon-theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
+sed -i 's/Inherits=Adwaita/Inherits=Breeze_Purple/' /usr/share/icons/default
 
 # enable bluetooth deamon
 systemctl enable bluetooth.service
 
 # symlink the dotfiles to home folder
-stow * -t ../.. --adopt
+# you can also stow individual app by running stow folder_name
+sudo -u $real_user stow * -t ../.. --adopt
 
 # copy and enable grub theme
 cp -a grub.config/grub/themes/liquid-amethyst /boot/grub/themes/liquid-amethyst
-sudo sed -i 's|#GRUB_THEME=|GRUB_THEME="/boot/grub/themes/liquid-amethyst/theme.txt"|' /etc/default/grub
-sudo sed -i 's/#GRUB_GFXMODE=/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
+sed -i 's|#GRUB_THEME=|GRUB_THEME="/boot/grub/themes/liquid-amethyst/theme.txt"|' /etc/default/grub
+sed -i 's/#GRUB_GFXMODE=/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # open terminal in nautilius
-gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
+sudo -u $real_user gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
 
 cd $HOME
 
 # configure light module to adjust brightness
-git clone https://github.com/haikarainen/light.git
+# remember that user needs to be in video group to use light
+sudo -u $real_user git clone https://github.com/haikarainen/light.git
 cd light
-./autogen.sh
-./configure --with-udev && make
-sudo make install
+sudo -u $real_user ./autogen.sh
+sudo -u $real_user ./configure --with-udev && sudo -u $real_user make
+make install
 cd $HOME
 rm -r light
 

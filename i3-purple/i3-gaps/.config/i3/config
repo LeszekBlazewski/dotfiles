@@ -29,18 +29,12 @@ floating_modifier $mod
 set $launcher rofi -show drun
 # Setting the status bar to polybar
 set $bar $HOME/.config/polybar/launch-polybar.sh
-# Setting the compositor to compton-tryone
-set $compositor $HOME/.config/compton/launch-compton.sh
 # Setting notification system to dunst
 set $notifications $HOME/.config/dunst/launch-dunst.sh
 # Setting the wallpaper
 set $wallpaper $HOME/.config/wallpaper/wallpaper.jpg
 # Setting the audio controller app
 set $audioctl pavucontrol
-
-# Screens variable names
-set $scr1 eDp-1
-set $scr2 HDMI-2
 
 # Colors
 set $black     "#000000"
@@ -90,16 +84,10 @@ client.urgent           $black       $blue        $black       $black
 # 	Adjust screens settings
 exec_always --no-startup-id xrandr --output eDP-1 --mode 1920x1080
 exec_always --no-startup-id xrandr --output HDMI-2 --mode 1920x1080 --rate 60 --right-of eDP-1
-# 	Start the compositor
-exec_always --no-startup-id $compositor
 # 	Start status bar
 exec_always --no-startup-id $bar
 # 	Set wallpaper
 exec_always --no-startup-id feh --bg-fill $wallpaper
-# 	Hides the cursor when is not needed
-# exec unclutter -root
-# 	Disables the middle mouse paste functionality
-# exec xmousepasteblock
 # 	Start notifications service
 exec_always --no-startup-id $notifications
 
@@ -108,8 +96,7 @@ exec_always  --no-startup-id "nm-applet"
 exec_always --no-startup-id "blueman-applet"
 
 # Execute programs in floating windows
-# 	Apps made with my cpp-proj utilities
-for_window [class=".*-custom-class-here"] floating enabled
+# for_window [class=".*-custom-class-here"] floating enabled
 
 # auto name workspace
 exec_always --no-startup-id  "/home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/venv/bin/python3 /home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/autoname_workspaces.py &"
@@ -148,6 +135,19 @@ bindsym $mod+F2 exec --no-startup-id nautilus
 bindsym $mod+F3 exec --no-startup-id discord
 # Start Spotify
 bindsym $mod+F4 exec --no-startup-id spotify
+
+# 	Screenshots
+bindsym Print exec --no-startup-id flameshot gui
+# 	Brightness
+bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 10
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
+# 	Volume
+bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume 0 -5%
+# 		Mute audio
+bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute 0 toggle # mute sound
+# 		Mute microphone
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -217,6 +217,7 @@ bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 10
+
 # 	Move focused window to workspace
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
@@ -248,25 +249,6 @@ bindsym $mod+Ctrl+Shift+Right move workspace to output right
 bindsym $mod+Shift+c reload
 # 	Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# 	Exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar --type warning --font 'pango:Noto Sans Regular 10' --message 'Do you really want to exit i3? This will end your X session.' --button 'Yes' 'i3-msg exit'"
-
-# Other binds
-# 	Screenshots
-bindsym Print exec --no-startup-id flameshot gui
-# 	Brightness
-# 		Up
-bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 10
-# 		Down
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
-# 	Volume
-bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume 0 -5%
-# 		Mute audio
-bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute 0 toggle # mute sound
-# 		Mute microphone
-bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
-
 
 
 # ===== i3-gaps specific =====
@@ -309,6 +291,8 @@ mode "gaps" {
 }
 # 	Start gaps adjusting mode
 bindsym $mod+g mode "gaps"
+
+# ===== Borders (highlight active window) =====
 
 for_window [class="^.*"] border pixel 2
 
