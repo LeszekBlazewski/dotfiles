@@ -33,6 +33,9 @@ systemctl enable lightdm
 sudo sed -i 's/-auth/auth/' /etc/pam.d/lightdm
 sudo sed -i 's/-session/session/' /etc/pam.d/lightdm
 
+# enable bluetooth deamon
+systemctl enable bluetooth.service
+
 # symlink the dotfiles to home folder
 stow * -t ../.. --adopt
 
@@ -49,6 +52,9 @@ sudo cp -a wallpaper/.config/wallpaper/wallpaper.jpg /usr/share/wallpapers
 sudo sed -i 's|#background=|background=/usr/share/wallpapers/wallpaper.jpg|' /etc/lightdm/lightdm-gtk-greeter.conf
 sudo sed -i 's|#theme-name=|theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
 sudo sed -i 's|#icon-theme-name=|icon-theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
+
+# open terminal in nautilius
+gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
 
 cd $HOME
 
