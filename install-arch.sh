@@ -49,6 +49,9 @@ fi
 loadkeys us
 KEY_MAP="us"
 
+# synchronize pacman database and install dialog
+$CHROOT pacman --noconfirm -Sy dialog
+
 # window
 title="Keymap Selection"
 msg="The default console keymap is US. Would you want to set a \
