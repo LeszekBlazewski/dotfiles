@@ -4,7 +4,7 @@ Dotfiles for various themes mostly gathered from others :D
 
 ## i3-nord
 
-https://www.reddit.com/r/unixporn/comments/f3tnh0/i3gaps_nord/
+All credits go to https://www.reddit.com/r/unixporn/comments/f3tnh0/i3gaps_nord/
 
 Screenshot:
 
