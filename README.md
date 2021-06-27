@@ -89,7 +89,7 @@ First, you need to prepare an Arch Linux LiveUSB and connect to the internet.
 Use this Installer in order to get minimal arch setup
 
 ```bash
-bash <(curl https://raw.githubusercontent.com/beard/dotfiles/master/install-arch.sh)
+bash <(curl https://raw.githubusercontent.com/LeszekBlazewski/dotfiles/master/install-arch.sh)
 ```
 
 During installation set:
@@ -103,5 +103,5 @@ Set timezone as warsaw
 After that your pc will be rebooted and you can use `install-i3.sh` to get a fully working i3 setup.
 
 ```bash
-bash <(curl https://raw.githubusercontent.com/beard/dotfiles/master/install-i3.sh)
+sudo bash <(curl https://raw.githubusercontent.com/LeszekBlazewski/dotfiles/master/install-i3.sh)
 ```
