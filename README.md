@@ -103,5 +103,5 @@ Set timezone as warsaw
 After that your pc will be rebooted and you can use `install-i3.sh` to get a fully working i3 setup.
 
 ```bash
-sudo bash <(curl -s https://raw.githubusercontent.com/LeszekBlazewski/dotfiles/master/install-i3.sh)
+sudo bash < <(curl -s https://raw.githubusercontent.com/LeszekBlazewski/dotfiles/master/install-i3.sh)
 ```
