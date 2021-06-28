@@ -31,14 +31,14 @@ pacman --noconfirm --needed -S git
 
 # install yay
 sudo -u $real_user git clone https://aur.archlinux.org/yay-git.git
-cd yay-git
+sudo -u $real_user cd yay-git
 sudo -u $real_user makepkg -si --rmdeps --noconfirm --needed
-cd $HOME
+sudo -u $real_user cd $HOME
 sudo -u $real_user rm -rf yay-git
 
 # clone dotefiles repo
 sudo -u $real_user git clone https://github.com/LeszekBlazewski/dotfiles.git
-cd dotfiles/i3-purple
+sudo -u $real_user cd dotfiles/i3-purple
 
 # install all of the packages from i3-purple setup
 sudo -u $real_user yay -S --needed --noconfirm --clean - < pkglist.txt
@@ -89,17 +89,17 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # open terminal in nautilius
 sudo -u $real_user gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
 
-cd $HOME
+sudo -u $real_user cd $HOME
 
 # configure light module to adjust brightness
 # remember that user needs to be in video group to use light
 sudo -u $real_user git clone https://github.com/haikarainen/light.git
-cd light
+sudo -u $real_user cd light
 sudo -u $real_user ./autogen.sh
 sudo -u $real_user ./configure --with-udev && sudo -u $real_user make
 make install
-cd $HOME
-rm -r light
+sudo -u $real_user cd $HOME
+sudo -u $real_user rm -r light
 
 echo "Customization complete! Automatic reboot in 2 seconds"
 sleep 2 && reboot
