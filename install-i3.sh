@@ -67,9 +67,9 @@ sed -i '$ a session	  optional	pam_gnome_keyring.so auto_start' /etc/pam.d/login
 cd i3-purple
 
 # copy and enable lightdm theme
-cp -a themes/.themes/Dracula /usr/share/themes
-cp -a icons/.icons/Dracula /usr/share/icons
-cp -a wallpaper/.config/wallpaper/wallpaper.jpg /usr/share/wallpapers
+cp -r themes/.themes/Dracula /usr/share/themes
+cp -r icons/.icons/Dracula /usr/share/icons
+cp -r wallpaper/.config/wallpaper/wallpaper.jpg /usr/share/wallpapers
 sed -i 's|#background=|background=/usr/share/wallpapers/wallpaper.jpg|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's|#theme-name=|theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's|#icon-theme-name=|icon-theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
@@ -85,7 +85,7 @@ sudo -u $real_user pip instal -r i3-gaps/.config/i3/i3scripts/requirements.txt
 sudo -u $real_user stow * -t ../.. --adopt
 
 # copy and enable grub theme
-cp -a grub.config/grub/themes/liquid-amethyst /boot/grub/themes/liquid-amethyst
+cp -r grub.config/grub/themes/liquid-amethyst /boot/grub/themes/liquid-amethyst
 sed -i 's|#GRUB_THEME=|GRUB_THEME="/boot/grub/themes/liquid-amethyst/theme.txt"|' /etc/default/grub
 sed -i 's/#GRUB_GFXMODE=/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
