@@ -12,7 +12,6 @@ exec 2> >(tee -a "installer.log")
 HEADER="Archlinux Installer"
 CHROOT="arch-chroot /mnt"
 EXIT_MSG="You have left from Archlinux Installer!" 
-KEY_MAP=
 
 ### 1.Verify the boot mode
 
@@ -43,14 +42,10 @@ then
 fi
 
 
-### 4.Keymap selection
-
-# set the keymap to default(us)
-loadkeys us
-KEY_MAP="us"
-
 # synchronize pacman database and install dialog
 pacman --noconfirm --needed -Sy dialog
+
+### 4.Keymap selection
 
 # window
 title="Keymap Selection"
@@ -475,7 +470,6 @@ fi
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # clear
-region_list=
 temp=
 
 ## Time zone
@@ -767,7 +761,7 @@ fi
 
 # Done
 title="Complete Installation"
-msg="Hey! You have installed a smallest Archlinux on your computer. Plesase type [ENTER] to reboot your computer. When your computer boot again, you need to login(in order to install successfully, don't login with root) to complete installation. Simply run install-i3.sh script to configure rest of the system [ESC] to exit installer"
+msg="Hey! You have installed a small working Archlinux on your computer. Plesase type [ENTER] to reboot your computer. When your computer boots again, you will find install-i3.sh script in your $usrname home direcotry which can get you a full working i3 setup (i3-purple) + some packages,  check https://github.com/LeszekBlazewski/dotfiles for details. [ESC] to exit installer"
 dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --msgbox "$msg" 10 60
 
 retval=$?
@@ -780,6 +774,9 @@ case $retval in
         exit 255
         ;;
 esac
+
+#download the i3-install script
+curl https://raw.githubusercontent.com/LeszekBlazewski/dotfiles/master/install-i3.sh > /mnt/home/$usrname/install-i3.sh
 
 # reboot
 reboot
