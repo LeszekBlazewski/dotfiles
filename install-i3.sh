@@ -27,7 +27,7 @@ fi
 pacman --noconfirm -Syyu
 
 #  install git
-pacman --noconfirm -S git
+pacman --noconfirm --needed -S git
 
 # install yay
 sudo -u $real_user git clone https://aur.archlinux.org/yay-git.git
@@ -45,6 +45,9 @@ yay -S --needed --noconfirm - < pkglist.txt
 
 # enable lightdm
 systemctl enable lightdm
+
+# set npt
+timedatectl set-ntp true
 
 # auto unlock gnome-keyring
 for file in "/etc/pam.d/lightdm" "/etc/pam.d/lightdm-autologin"
