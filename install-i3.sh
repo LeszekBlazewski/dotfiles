@@ -34,7 +34,7 @@ sudo -u $real_user git clone https://aur.archlinux.org/yay-git.git
 cd yay-git
 sudo -u $real_user makepkg -si --rmdeps --noconfirm --needed
 cd $HOME
-rm -r yay-git
+rm -rf yay-git
 
 # clone dotefiles repo
 sudo -u $real_user git clone https://github.com/LeszekBlazewski/dotfiles.git
