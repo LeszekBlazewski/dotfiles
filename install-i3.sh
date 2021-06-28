@@ -73,7 +73,7 @@ cp -a wallpaper/.config/wallpaper/wallpaper.jpg /usr/share/wallpapers
 sed -i 's|#background=|background=/usr/share/wallpapers/wallpaper.jpg|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's|#theme-name=|theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's|#icon-theme-name=|icon-theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
-sed -i 's/Inherits=Adwaita/Inherits=Breeze_Purple/' /usr/share/icons/default
+sed -i 's/Inherits=Adwaita/Inherits=Breeze_Purple/' /usr/share/icons/default/index.theme
 
 # create python environment for i3scripts and install the dependencies
 sudo -u $real_user python3 -m venv i3-gaps/.config/i3/i3scripts/venv
