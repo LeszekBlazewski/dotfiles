@@ -248,7 +248,7 @@ esac
 
 # firstly,unmount all partition have mounted at /mnt
 # swapoff
-swap=$(swapon -s | tail -1 | cut -d " " -f 1)
+swap=$(swapon --show | tail -1 | cut -d " " -f 1)
 [ -z "$swap" ] || swapoff "$swap"
 
 umount -R /mnt
@@ -277,15 +277,15 @@ else
     dialog --no-cancel --ok-label "Continue" --ascii-lines --title "$title" --backtitle "$HEADER" --checklist "$msg" 18 75 18 \
         "/" "Entire system's root directory" "ON"\
         "/boot" "Boot loader files" "ON"\
-        "/bin" "Essential command binaries" "OFF"\
         "/home" "Users' home directories" "OFF"\
+        "swap" "swap partition" "OFF"\
+        "/bin" "Essential command binaries" "OFF"\
         "/var" "Variable files" "OFF"\
         "/etc" "Host-specific system-wide configuration files" "OFF"\
         "/lib" "Libraries essential for the binaries in /bin/ and /sbin/" "OFF"\
         "/opt" "Optional application software packages" "OFF"\
         "/usr" "Secondary hierarchy for read-only user data" "OFF"\
-        "/run" "Run-time variable data" "OFF"\
-        "swap" "swap partition" "OFF" 2>tempfile
+        "/run" "Run-time variable data" "OFF" 2>tempfile
 fi
 
 retval=$?
@@ -330,7 +330,7 @@ case $retval in
                 then
                     available_partition_list="${available_partition_list} $partition $info"
                 else
-                    format_list="ext2 ext3 ext4" 
+                    format_list="ext4" 
                     for format in $format_list
                     do
                         info_1=${info}--">"$format
@@ -379,10 +379,10 @@ case $retval in
                     msg="Please input the size(MB) of swap file.	[ESC] to exit installer\n\nPlease confirm before typing the [ENTER], because you can't undo it."
                     dialog --ascii-lines --no-cancel --title "$title" --backtitle "$HEADER" --inputbox "$msg" 10 50 512 2>tempfile
 
-                    retval=$?
+                    retval_2=$?
                     size=$(cat tempfile)
 
-                    case $retval in
+                    case $retval_2 in
                         0) # create swap file
                             dd if=/dev/zero of=/mnt/swap bs=1M count=$size
                             mkswap /mnt/swap >/dev/null 2>&1
@@ -411,10 +411,10 @@ case $retval in
                 msg="$selected_partition may be already a ESP, so you may don't want to format it. Do you want to format it?    [ESC] to exit installer\n\nPlease confirm before typing the [ENTER], because you can't undo it."
                 dialog --ascii-lines --default-button "Yes" --title "$title" --backtitle "$HEADER" --yesno "$msg" 10 45
 
-                retval=$?
+                retval_3=$?
                 echo
 
-                case $retval in
+                case $retval_3 in
                         0)
                         mkfs.$format $selected_partition >/dev/null 2>&1
                         ;;
@@ -426,12 +426,7 @@ case $retval in
                 esac
 
             else
-                if [ "$format" = "vfat" ]
-                then
-                    mkfs.$format $selected_partition >/dev/null 2>&1
-                else
-                    mkfs.$format -F $selected_partition >/dev/null 2>&1
-                fi
+                mkfs.$format $selected_partition >/dev/null 2>&1
             fi
 
             # mount the partition
@@ -457,7 +452,6 @@ case $retval in
         ;;
 
     255) #ESC
-        echo
         echo $EXIT_MSG
         exit 255
         ;;

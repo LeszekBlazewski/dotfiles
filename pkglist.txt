@@ -30,6 +30,7 @@ vi
 vim
 visual-studio-code-bin
 breeze-purple-cursor-theme
+man-db
 xorg-server
 xorg-xinit
 xorg-xinput
