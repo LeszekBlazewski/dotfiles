@@ -38,13 +38,16 @@ sudo -u $real_user rm -r yay-git
 
 # clone dotefiles repo
 sudo -u $real_user git clone https://github.com/LeszekBlazewski/dotfiles.git
-cd dotfiles/i3-purple
+cd dotfiles
 
 # install all of the packages from i3-purple setup
 sudo -u $real_user yay -S --needed --noconfirm --clean - < pkglist.txt
 
 # enable lightdm
 systemctl enable lightdm
+
+# enable bluetooth deamon
+systemctl enable bluetooth.service
 
 # set npt
 timedatectl set-ntp true
@@ -59,6 +62,9 @@ done
 sed -i '3 a auth	  optional	pam_gnome_keyring.so' /etc/pam.d/login
 sed -i '$ a session	  optional	pam_gnome_keyring.so auto_start' /etc/pam.d/login
 
+# i3-purple
+cd i3-purple
+
 # copy and enable lightdm theme
 cp -a themes/.themes/Dracula /usr/share/themes
 cp -a icons/.icons/Dracula /usr/share/icons
@@ -67,9 +73,6 @@ sed -i 's|#background=|background=/usr/share/wallpapers/wallpaper.jpg|' /etc/lig
 sed -i 's|#theme-name=|theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's|#icon-theme-name=|icon-theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's/Inherits=Adwaita/Inherits=Breeze_Purple/' /usr/share/icons/default
-
-# enable bluetooth deamon
-systemctl enable bluetooth.service
 
 # create python environment for i3scripts and install the dependencies
 sudo -u $real_user python3 -m venv i3-gaps/.config/i3/i3scripts/venv
@@ -89,17 +92,17 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # open terminal in nautilius
 sudo -u $real_user gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
 
-cd /home/$real_user
+# cd /home/$real_user
 
 # configure light module to adjust brightness
 # remember that user needs to be in video group to use light
-sudo -u $real_user git clone https://github.com/haikarainen/light.git
-cd light
-sudo -u $real_user ./autogen.sh
-sudo -u $real_user ./configure --with-udev && sudo -u $real_user make
-make install
-cd /home/$real_user
-sudo -u $real_user rm -r light
+# sudo -u $real_user git clone https://github.com/haikarainen/light.git
+# cd light
+# sudo -u $real_user ./autogen.sh
+# sudo -u $real_user ./configure --with-udev && sudo -u $real_user make
+# make install
+# cd /home/$real_user
+# sudo -u $real_user rm -r light
 
 echo "Customization complete! Automatic reboot in 2 seconds"
 sleep 2 && reboot
