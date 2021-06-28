@@ -20,7 +20,6 @@ pavucontrol
 polybar
 pulseaudio
 rofi
-spotify
 starship
 stow
 ttf-dejavu
