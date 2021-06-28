@@ -68,6 +68,11 @@ sed -i 's/Inherits=Adwaita/Inherits=Breeze_Purple/' /usr/share/icons/default
 # enable bluetooth deamon
 systemctl enable bluetooth.service
 
+# create python environment for i3scripts and install the dependencies
+sudo -u $real_user python3 -m venv i3-gaps/.config/i3/i3scripts/venv
+sudo -u $real_user source i3-gaps/.config/i3/i3scripts/venv/bin/activate
+sudo -u $real_user pip instal -r i3-gaps/.config/i3/i3scripts/requirements.txt
+
 # symlink the dotfiles to home folder
 # you can also stow individual app by running stow folder_name
 sudo -u $real_user stow * -t ../.. --adopt

@@ -99,10 +99,10 @@ exec_always --no-startup-id "blueman-applet"
 # for_window [class=".*-custom-class-here"] floating enabled
 
 # auto name workspace
-exec_always --no-startup-id  "/home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/venv/bin/python3 /home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/autoname_workspaces.py &"
+exec_always --no-startup-id  "i3scripts/venv/bin/python3 i3scripts/autoname_workspaces.py &"
 
 # create new workspace on current monitor
-bindsym $mod+n exec --no-startup-id  "/home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/venv/bin/python3 /home/beard/dotfiles/current-config/i3-gaps/.config/i3/i3scripts/new_workspace.py &"
+bindsym $mod+n exec --no-startup-id  "i3scripts/venv/bin/python3  i3scripts/new_workspace.py &"
 
 
 # ===== Devices =====
