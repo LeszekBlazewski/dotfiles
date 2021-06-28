@@ -41,7 +41,8 @@ sudo -u $real_user git clone https://github.com/LeszekBlazewski/dotfiles.git
 cd dotfiles
 
 # install all of the packages from i3-purple setup
-sudo -u $real_user yay -S --needed --noconfirm --clean - < pkglist.txt
+sudo -u $real_user yay -S --needed --noconfirm - < pkglist.txt
+sudo -u $real_user yay --clean --noconfirm
 
 # enable lightdm
 systemctl enable lightdm
