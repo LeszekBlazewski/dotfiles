@@ -33,8 +33,8 @@ pacman --noconfirm --needed -S git
 sudo -u $real_user git clone https://aur.archlinux.org/yay-git.git
 cd yay-git
 sudo -u $real_user makepkg -si --rmdeps --noconfirm --needed
-cd $HOME
-sudo -u $real_user rm -rf yay-git
+cd /home/$real_user
+sudo -u $real_user rm -r yay-git
 
 # clone dotefiles repo
 sudo -u $real_user git clone https://github.com/LeszekBlazewski/dotfiles.git
@@ -89,7 +89,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # open terminal in nautilius
 sudo -u $real_user gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
 
-cd $HOME
+cd /home/$real_user
 
 # configure light module to adjust brightness
 # remember that user needs to be in video group to use light
@@ -98,7 +98,7 @@ cd light
 sudo -u $real_user ./autogen.sh
 sudo -u $real_user ./configure --with-udev && sudo -u $real_user make
 make install
-cd $HOME
+cd /home/$real_user
 sudo -u $real_user rm -r light
 
 echo "Customization complete! Automatic reboot in 2 seconds"
