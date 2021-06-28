@@ -34,14 +34,14 @@ sudo -u $real_user git clone https://aur.archlinux.org/yay-git.git
 cd yay-git
 sudo -u $real_user makepkg -si --rmdeps --noconfirm --needed
 cd $HOME
-rm -rf yay-git
+sudo -u $real_user rm -rf yay-git
 
 # clone dotefiles repo
 sudo -u $real_user git clone https://github.com/LeszekBlazewski/dotfiles.git
 cd dotfiles/i3-purple
 
 # install all of the packages from i3-purple setup
-yay -S --needed --noconfirm --clean - < pkglist.txt
+sudo -u $real_user yay -S --needed --noconfirm --clean - < pkglist.txt
 
 # enable lightdm
 systemctl enable lightdm
