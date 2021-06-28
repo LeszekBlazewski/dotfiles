@@ -105,14 +105,16 @@ case $retval_out in
                 ;;
             255) # ESC
                 echo $EXIT_MSG
-                exit 255;;
+                exit 255
+                ;;
         esac
         ;;
 
     # 255) ESC -- exit the installer
         255)
         echo $EXIT_MSG
-        exit 255;;
+        exit 255
+        ;;
 esac
 
 ### 5.Partition the disks
@@ -219,7 +221,8 @@ and just only one ESP on your disks.\n\n[ESC] to exit the installer"
             255) # ESC
                 echo
                 echo $EXIT_MSG
-                exit 255;;
+                exit 255
+                ;;
         esac
 
         # use cfdisk to partition disks
@@ -236,7 +239,8 @@ and just only one ESP on your disks.\n\n[ESC] to exit the installer"
     ## 255) ESE -- exit the installer
         255)
         echo $EXIT_MSG
-        exit 255;;
+        exit 255
+        ;;
 esac
 
 
@@ -361,7 +365,8 @@ case $retval in
                 255) # ESC
                     echo 
                     echo $EXIT_MSG
-                    exit 255;
+                    exit 255
+                    ;;
             esac
 
             # for swap partition
@@ -386,7 +391,8 @@ case $retval in
                         255) # ESC
                             echo
                             echo $EXIT_MSG
-                            exit 255 ;;
+                            exit 255
+                            ;;
                     esac
                 else
                     mkswap $selected_partition >/dev/null 2>&1
@@ -415,7 +421,8 @@ case $retval in
 
                     255) # ESC
                         echo $EXIT_MSG
-                        exit 255;;
+                        exit 255
+                        ;;
                 esac
 
             else
@@ -452,7 +459,8 @@ case $retval in
     255) #ESC
         echo
         echo $EXIT_MSG
-        exit 255;;
+        exit 255
+        ;;
 esac
 
 
@@ -531,7 +539,8 @@ case $retval in
     255) # ESC
         echo
         echo $EXIT_MSG
-        exit 255;;
+        exit 255
+        ;;
 esac
 
 mirrorlist=$(awk "/${choice/-/ }/{getline; print}" /etc/pacman.d/mirrorlist | cut -d " " -f 3 | xargs)
@@ -555,7 +564,8 @@ case $retval in
     255) # ESC
         echo
         echo $EXIT_MSG
-        exit 255;;
+        exit 255
+        ;;
 esac
 
 first_usable_line=$[ $(grep -n "Server" /etc/pacman.d/mirrorlist |head -1| cut -d ":" -f 1) - 1 ]
@@ -769,24 +779,22 @@ echo "LANG=$choice">/mnt/etc/locale.conf
 echo "KEYMAP=$KEY_MAP" >/mnt/etc/vconsole.conf
 
 ##  hostname
-# title="Set hostname"
-# msg="Please input the hostname.		[ESC] to exit the installer.\n\nPlease confirm before typing the [ENTER], because you can't undo it."
-# dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --inputbox "$msg" 10 59 "hostname" 2>tempfile
+title="Set hostname"
+msg="Please input the hostname.		[ESC] to exit the installer.\n\nPlease confirm before typing the [ENTER], because you can't undo it."
+dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --inputbox "$msg" 10 59 "hostname" 2>tempfile
 
-# retval=$?
-# choice=$(cat tempfile)
+retval=$?
+choice=$(cat tempfile)
 
-# # if ESC,exit
-# case $retval in
-#     255)
-#         echo
-#         echo $EXIT_MSG
-#         exit 255
-#         ;;
-# esac
+# if ESC,exit
+case $retval in
+    255)
+        echo
+        echo $EXIT_MSG
+        exit 255
+        ;;
+esac
 
-# default hostname
-choice="beard"
 echo $choice >/mnt/etc/hostname
 
 # set hosts
@@ -815,25 +823,24 @@ esac
 echo "root:$choice" | $CHROOT chpasswd
 
 ### 11.Add New User
-# default user
-choice="beard"
-usrname=$choice
-# title="Add user"
-# msg="Please input the user name.		[ESC] to exit the installer.\n\nPlease confirm before typing the [ENTER], because you can't undo it."
-# dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --inputbox "$msg" 10 59 "username" 2>tempfile
+title="Add user"
+msg="Please input the user name.		[ESC] to exit the installer.\n\nPlease confirm before typing the [ENTER], because you can't undo it."
+dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --inputbox "$msg" 10 59 "username" 2>tempfile
 
-# retval=$?
+retval=$?
+choice=$(cat tempfile)
+usrname=$choice
 # if ESC,exit
-# case $retval in
-#     255)
-#         echo
-#         echo $EXIT_MSG
-#         exit 255
-#         ;;
-# esac
+case $retval in
+    255)
+        echo
+        echo $EXIT_MSG
+        exit 255
+        ;;
+esac
 
 # user add
-$CHROOT useradd -m -G wheel video -s /bin/bash $choice
+$CHROOT useradd -m -G wheel,video -s /bin/bash $choice
 
 # init passwd
 title="User Passwd"
@@ -875,6 +882,9 @@ $CHROOT pacman --noconfirm -S network-manager-applet
 # firstly,install grub and efibootmgr
 platform=$(uname -m)
 
+# used for probe other os
+$CHROOT pacman --noconfirm -S os-prober
+
 # for UEFI,just for x86_64 or i386
 if [ "$BOOT_MODE" = "UEFI" ]
 then
@@ -896,7 +906,7 @@ fi
 
 # Done
 title="Complete Installation"
-msg="Hey! You have installed a smallest Archlinux on your computer. Plesase type [ENTER] to reboot your computer. When your computer boot again, you need to login(in order to install successfully, don't login with root) to complete installation. Simply run option_install.sh script to configure the apps.	[ESC] to exit installer"
+msg="Hey! You have installed a smallest Archlinux on your computer. Plesase type [ENTER] to reboot your computer. When your computer boot again, you need to login(in order to install successfully, don't login with root) to complete installation. Simply run install-i3.sh script to configure rest of the system [ESC] to exit installer"
 dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --msgbox "$msg" 10 60
 
 retval=$?
