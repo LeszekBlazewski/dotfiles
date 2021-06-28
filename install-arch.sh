@@ -50,7 +50,7 @@ loadkeys us
 KEY_MAP="us"
 
 # synchronize pacman database and install dialog
-pacman --noconfirm -Sy dialog
+pacman --noconfirm --needed -Sy dialog
 
 # window
 title="Keymap Selection"
@@ -731,14 +731,12 @@ echo "$usrname:$choice" |$CHROOT chpasswd
 # sudo was already installed in base-devel package
 
 #uncomment the wheel group in sudoers file
-sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/" /etc/sudoers
+sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/" /mnt/etc/sudoers
 
 ### 11.Configure network
 # Nework manager
-$CHROOT pacman --noconfirm -S networkmanager
+$CHROOT pacman --needed --noconfirm -S networkmanager
 $CHROOT  systemctl enable NetworkManager.service
-# for wifi-menu
-$CHROOT pacman --noconfirm -S network-manager-applet
 # dhclient (included in network manager)
 #$CHROOT pacman --noconfirm -S dhcpcd
 
@@ -748,20 +746,18 @@ $CHROOT pacman --noconfirm -S network-manager-applet
 platform=$(uname -m)
 
 # used for probe other os
-$CHROOT pacman --noconfirm -S os-prober
+$CHROOT pacman --needed --noconfirm -S os-prober
 
 # for UEFI,just for x86_64 or i386
 if [ "$BOOT_MODE" = "UEFI" ]
 then
-    $CHROOT pacman --noconfirm -S grub efibootmgr
-    # used for probe other os && enable os-prober
-    $CHROOT pacman --noconfirm -S os-prober
-    echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
+    $CHROOT pacman --needed --noconfirm -S grub efibootmgr
+    echo "GRUB_DISABLE_OS_PROBER=false" >> /mnt/etc/default/grub
     $CHROOT grub-install --target=${platform}-efi --efi-directory=/boot --bootloader-id=Grub 
     $CHROOT grub-mkconfig -o /boot/grub/grub.cfg
 
 else # for BIOS
-    $CHROOT pacman --noconfirm -S grub
+    $CHROOT pacman --needed --noconfirm -S grub
     $CHROOT grub-install --target=i386-pc --recheck $ROOT_DISK
     $CHROOT grub-mkconfig -o /boot/grub/grub.cfg
 fi
