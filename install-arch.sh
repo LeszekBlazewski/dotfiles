@@ -457,136 +457,7 @@ case $retval in
         ;;
 esac
 
-
-### 7.Select the mirrors
-# if there are mirrors add by Archlinux Installer,delete it
-line=$(grep -n "Add by Archlinux Installer" /etc/pacman.d/mirrorlist | cut -d ":" -f 1)
-if [ -z "$line" ]
-then
-    # do nothing
-    echo
-else
-    line_begin=$[ $(echo "$line" | head -1) - 1]
-    line_end=$[ $(wc -l /etc/pacman.d/mirrorlist | cut -d " " -f 1) - $(echo "$line" | tail -1) - 1]
-    head -$line_begin /etc/pacman.d/mirrorlist >tempfile
-    tail -$line_end /etc/pacman.d/mirrorlist >>tempfile
-    mv tempfile /etc/pacman.d/mirrorlist
-fi
-
-function get_region_list # from /etc/pacman.d/mirrorlist
-{
-    # skip the file header
-    first_usable_line=$[ $(grep -n "Server" /etc/pacman.d/mirrorlist |head -1| cut -d ":" -f 1) - 1 ]
-    line_amount=$(cat /etc/pacman.d/mirrorlist | wc -l)
-    # line will be used later
-    work_line=$[ $line_amount - $first_usable_line + 1 ]
-
-    # which column the region name is at
-    first_word_column=$[ $(grep "Poland" /etc/pacman.d/mirrorlist | head -1 | sort -u | grep -o " " | wc -l) +1 ]
-
-    # init region list
-    region_list=$(tail -$work_line /etc/pacman.d/mirrorlist | grep "##" | cut -d " " -f $first_word_column | sort -u | xargs)
-
-    # replace " " with "-"
-    second_word_list=$(tail -$work_line /etc/pacman.d/mirrorlist | grep "##" | cut -d " " -f $[$first_word_column + 1] | sort -u | xargs)
-    for word in $second_word_list
-    do
-        first_word=$(grep " $word" /etc/pacman.d/mirrorlist | cut -d " " -f $first_word_column | sort -u)
-        echo $region_list | grep "$first_word-" >/dev/null
-        if [ "$?" != "0" ]
-        then
-            region_list=${region_list/$first_word/}
-        fi
-
-        region_list="$region_list ${first_word}-${word}"
-    done
-
-    third_word_list=$(tail -$work_line /etc/pacman.d/mirrorlist | grep "##" | cut -d " " -f $[ $first_word_column + 2] | sort -u | xargs)
-    for word in $third_word_list
-    do
-        second_word=$(grep " $word" /etc/pacman.d/mirrorlist | cut -d " " -f $[ $first_word_column + 1] | sort -u)
-        region_list=${region_list/-$second_word/-${second_word}-$word}
-    done
-    echo $region_list | tr ' ' '\n' | sort -u | xargs
-}
-
-# get region list from /etc/pacman.d/mirrorlist
-region_list=$(get_region_list)
-
-# duplicate region,used for dialog
-for region in $region_list
-do
-    temp="${temp} $region $region"
-done
-region_list=$temp
-
-# select region
-title="Select the mirrors"
-msg="Before select the mirrors,Please select the region.	[ESC] to exit the installer\n\nPlease confirm before typing the [ENTER], because you can't undo it."
-dialog --no-cancel --ok-button "Select" --ascii-lines --title "$title" --backtitle "$HEADER" --menu "$msg" 18 75 18 $region_list 2>tempfile
-
-retval=$?
-choice=$(cat tempfile)
-
-# if ESC,exit
-case $retval in 
-    255) # ESC
-        echo
-        echo $EXIT_MSG
-        exit 255
-        ;;
-esac
-
-mirrorlist=$(awk "/${choice/-/ }/{getline; print}" /etc/pacman.d/mirrorlist | cut -d " " -f 3 | xargs)
-
-# without description
-mirror_list=$mirrorlist
-mirrorlist=${mirrorlist// / $choice } 
-mirrorlist="${mirrorlist} $choice"
-region=$choice
-
-# select best mirrors
-title="Select the mirrors"
-msg="Select best mirrors for you.	[ESC] to exit the installer\n\nPlease confirm before typing the [ENTER], because you can't undo it."
-dialog --no-cancel --ok-button "Select" --ascii-lines --title "$title" --backtitle "$HEADER" --menu "$msg" 18 75 18 $mirrorlist 2>tempfile
-
-retval=$?
-choice=$(cat tempfile)
-
-# if ESC,exit
-case $retval in 
-    255) # ESC
-        echo
-        echo $EXIT_MSG
-        exit 255
-        ;;
-esac
-
-first_usable_line=$[ $(grep -n "Server" /etc/pacman.d/mirrorlist |head -1| cut -d ":" -f 1) - 1 ]
-pattern=$(head -$first_usable_line /etc/pacman.d/mirrorlist | tail -1)
-
-# add comment
-sed -i "0,/$pattern/s/$pattern/## Add by Archlinux Installer,for $region\n&/" /etc/pacman.d/mirrorlist
-
-# insert best mirrors as first mirrors
-sed -i "0,/$pattern/s/$pattern/Server = ${choice//\//\\\/}\n&/" /etc/pacman.d/mirrorlist
-
-# add loop
-for mirrors in $mirror_list
-do
-    if [ "$mirrors" != "$choice" ]
-    then
-        sed -i "0,/$pattern/s/$pattern/Server = ${mirrors//\//\\\/}\n&/" /etc/pacman.d/mirrorlist
-    fi
-done
-
-# end
-sed -i "0,/$pattern/s/$pattern/## Add by Archlinux Installer,for $region\n&/" /etc/pacman.d/mirrorlist
-# newline
-sed -i "0,/$pattern/s/$pattern/\n\n&/" /etc/pacman.d/mirrorlist
-
-
-### 8.Install the base and base-devel packages
+### 7.Install the base and base-devel packages
 echo
 
 pacstrap /mnt base linux linux-firmware base-devel
@@ -598,7 +469,7 @@ then
 fi
 
 
-### 9.Configure the system
+### 8.Configure the system
 
 ## Fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -746,7 +617,7 @@ done
 # generate the locale
 $CHROOT locale-gen >/dev/null
 
-# select sysem locale
+# select system locale
 title="System Locale"
 msg="Please select system locale. the first column is locale, the second column is charset. <locale> <charset>. Don't recommend set chinese locale here. If you want to set chinese locale, you can just set for desktop environment later.	[ESC] to exit the installer\n\nPlease confirm before typing the [ENTER], because you can't undo it."
 
@@ -796,7 +667,7 @@ echo "127.0.1.1		localhost" >>/mnt/etc/hosts
 echo "::1		localhost" >>/mnt/etc/hosts
 echo "127.0.1.1		$choice.localdomain	$choice" >>/mnt/etc/hosts
 
-### 10.Set root password
+### 9.Set root password
 title="Root password"
 msg="Please input the password.		[ESC] to exit the installer.\n\nPlease confirm before typing the [ENTER], because you can't undo it."
 dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --inputbox "$msg" 10 59 "password" 2>tempfile
@@ -816,7 +687,7 @@ esac
 # change passwd
 echo "root:$choice" | $CHROOT chpasswd
 
-### 11.Add New User
+### 10.Add New User
 title="Add user"
 msg="Please input the user name.		[ESC] to exit the installer.\n\nPlease confirm before typing the [ENTER], because you can't undo it."
 dialog --no-cancel --ascii-lines --title "$title" --backtitle "$HEADER" --inputbox "$msg" 10 59 "username" 2>tempfile
@@ -862,7 +733,7 @@ echo "$usrname:$choice" |$CHROOT chpasswd
 #uncomment the wheel group in sudoers file
 sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/" /etc/sudoers
 
-### 12.Configure network
+### 11.Configure network
 # Nework manager
 $CHROOT pacman --noconfirm -S networkmanager
 $CHROOT  systemctl enable NetworkManager.service
@@ -871,7 +742,7 @@ $CHROOT pacman --noconfirm -S network-manager-applet
 # dhclient (included in network manager)
 #$CHROOT pacman --noconfirm -S dhcpcd
 
-### 13.GRUB
+### 12.GRUB
 
 # firstly,install grub and efibootmgr
 platform=$(uname -m)
