@@ -53,16 +53,6 @@ systemctl enable bluetooth.service
 # set npt
 timedatectl set-ntp true
 
-# auto unlock gnome-keyring
-for file in "/etc/pam.d/lightdm" "/etc/pam.d/lightdm-autologin"
-do
-    sed -i 's/-auth/auth/' $file
-    sed -i 's/-session/session/' $file
-done
-
-sed -i '3 a auth	  optional	pam_gnome_keyring.so' /etc/pam.d/login
-sed -i '$ a session	  optional	pam_gnome_keyring.so auto_start' /etc/pam.d/login
-
 # i3-purple
 cd i3-purple
 
@@ -91,6 +81,9 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # load gnome dconf settings
 dconf load / < dconf/.config/dconf/dconf.ini
+
+# set multilockscreen image
+sudo -u $real_user multilockscreen -u wallpaper/multilockscreen
 
 echo "Customization complete! Automatic reboot in 2 seconds"
 sleep 2 && reboot

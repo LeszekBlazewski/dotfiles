@@ -36,3 +36,4 @@ xorg-xinit
 xorg-xinput
 xorg-xrandr
 multilockscreen
+xautolock
