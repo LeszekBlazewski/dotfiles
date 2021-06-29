@@ -13,6 +13,7 @@ light
 lightdm
 lightdm-gtk-greeter
 nautilus
+file-roller
 nautilus-open-any-terminal
 network-manager-applet
 numlockx
