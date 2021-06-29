@@ -59,7 +59,8 @@ cd i3-purple
 # copy and enable lightdm theme
 cp -r themes/.themes/Dracula /usr/share/themes
 cp -r icons/.icons/Dracula /usr/share/icons
-cp wallpaper/.config/wallpaper/* /usr/share/wallpapers
+mkdir -p /usr/share/wallpapers
+cp wallpaper/.config/wallpaper/wallpaper.jpg /usr/share/wallpapers
 sed -i 's|#background=|background=/usr/share/wallpapers/wallpaper.jpg|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's|#theme-name=|theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
 sed -i 's|#icon-theme-name=|icon-theme-name=Dracula|' /etc/lightdm/lightdm-gtk-greeter.conf
