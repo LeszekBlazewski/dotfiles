@@ -35,3 +35,4 @@ xorg-server
 xorg-xinit
 xorg-xinput
 xorg-xrandr
+multilockscreen
