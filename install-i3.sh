@@ -86,7 +86,7 @@ sudo -u $real_user stow * -t ../.. --adopt
 # copy and enable grub theme
 cp -r grub/.config/grub/themes/liquid-amethyst /boot/grub/themes/liquid-amethyst
 sed -i 's|#GRUB_THEME="/path/to/gfxtheme"|GRUB_THEME="/boot/grub/themes/liquid-amethyst/theme.txt"|' /etc/default/grub
-sed -i 's/#GRUB_GFXMODE=auto/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
+sed -i 's/GRUB_GFXMODE=auto/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # open terminal in nautilius
