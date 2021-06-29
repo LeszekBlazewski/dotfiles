@@ -89,20 +89,8 @@ sed -i 's|#GRUB_THEME="/path/to/gfxtheme"|GRUB_THEME="/boot/grub/themes/liquid-a
 sed -i 's/GRUB_GFXMODE=auto/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# open terminal in nautilius
-# sudo -u $real_user gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
-
-# cd /home/$real_user
-
-# configure light module to adjust brightness
-# remember that user needs to be in video group to use light
-# sudo -u $real_user git clone https://github.com/haikarainen/light.git
-# cd light
-# sudo -u $real_user ./autogen.sh
-# sudo -u $real_user ./configure --with-udev && sudo -u $real_user make
-# make install
-# cd /home/$real_user
-# sudo -u $real_user rm -r light
+# load gnome dconf settings
+dconf load / < dconf/.config/dconf/dconf.ini
 
 echo "Customization complete! Automatic reboot in 2 seconds"
 sleep 2 && reboot
