@@ -84,13 +84,13 @@ sudo -u $real_user i3-gaps/.config/i3/i3scripts/venv/bin/pip install -r i3-gaps/
 sudo -u $real_user stow * -t ../.. --adopt
 
 # copy and enable grub theme
-cp -r grub.config/grub/themes/liquid-amethyst /boot/grub/themes/liquid-amethyst
+cp -r grub/.config/grub/themes/liquid-amethyst /boot/grub/themes/liquid-amethyst
 sed -i 's|#GRUB_THEME=|GRUB_THEME="/boot/grub/themes/liquid-amethyst/theme.txt"|' /etc/default/grub
 sed -i 's/#GRUB_GFXMODE=/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # open terminal in nautilius
-sudo -u $real_user gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
+# sudo -u $real_user gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
 
 # cd /home/$real_user
 
