@@ -20,7 +20,11 @@
 # Start optimus prime offloading
 # /usr/bin/prime-offload
 
-# Start i3 session (needs to be last)
+# numlock on after boot
 numlockx &
 
+# keyboard layout for pl
+setxkbmap $(cat .Xkbmap) &
+
+# Start i3 session (needs to be last)
 exec i3
