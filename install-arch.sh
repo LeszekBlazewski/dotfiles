@@ -777,6 +777,8 @@ esac
 
 #download the i3-install script
 curl https://raw.githubusercontent.com/LeszekBlazewski/dotfiles/master/install-i3.sh > /mnt/home/$usrname/install-i3.sh
+chmod +x /mnt/home/$usrname/install-i3.sh
+chown $usrname:$usrname /mnt/home/$usrname/install-i3.sh
 
 # reboot
 reboot
