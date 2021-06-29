@@ -54,7 +54,7 @@ Components:
 - [Dracula GTK theme + icons](https://draculatheme.com/gtk)
 - [autonameworkspace for i3](https://github.com/justbuchanan/i3scripts)
 
-![screenshot](/i3-purple/i3-purple.png)
+![screenshot](i3-purple.png)
 
 
 ## Arch linux automatic installer for i3-purple setup
