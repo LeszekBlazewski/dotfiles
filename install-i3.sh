@@ -71,7 +71,7 @@ sudo -u $real_user python3 -m venv i3-gaps/.config/i3/i3scripts/venv
 sudo -u $real_user i3-gaps/.config/i3/i3scripts/venv/bin/pip install -r i3-gaps/.config/i3/i3scripts/requirements.txt
 
 # remove default profiles
-sudo -u $real_user rm /home/$real_user/.bashrc /home/$real_user/.bash_profile
+sudo -u $real_user rm -f /home/$real_user/.bashrc /home/$real_user/.bash_profile
 
 # symlink the dotfiles to home folder
 # you can also stow individual app by running stow folder_name
