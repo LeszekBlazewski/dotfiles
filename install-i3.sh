@@ -13,7 +13,7 @@ set -euo pipefail
 
 # ref: https://askubuntu.com/questions/425754/how-do-i-run-a-sudo-command-inside-a-script
 if ! [ $(id -u) = 0 ]; then
-   echo "The script need to be run as root." >&2
+   echo "The script needs to bu run with sudo." >&2
    exit 1
 fi
 
@@ -69,6 +69,9 @@ sed -i 's/Inherits=Adwaita/Inherits=Breeze_Purple/' /usr/share/icons/default/ind
 # create python environment for i3scripts and install the dependencies
 sudo -u $real_user python3 -m venv i3-gaps/.config/i3/i3scripts/venv
 sudo -u $real_user i3-gaps/.config/i3/i3scripts/venv/bin/pip install -r i3-gaps/.config/i3/i3scripts/requirements.txt
+
+# remove default profiles
+sudo -u $real_user rm /home/$real_user/.bashrc /home/$real_user/.bash_profile
 
 # symlink the dotfiles to home folder
 # you can also stow individual app by running stow folder_name
