@@ -35,6 +35,8 @@ Components:
 
 ## i3-orange
 
+All credits go to https://github.com/elinahedenius/dots
+
 **This are only dotfiles which can be copied to target system, no automation whatsoever**
 
 Components:
