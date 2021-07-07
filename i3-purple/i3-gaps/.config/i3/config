@@ -91,6 +91,9 @@ exec_always --no-startup-id feh --bg-fill $wallpaper
 # 	Start notifications service
 exec_always --no-startup-id $notifications
 
+# screen capture
+exec_always --no-startup-id flameshot &
+
 # Applets
 exec_always  --no-startup-id "nm-applet"
 exec_always --no-startup-id "blueman-applet"
