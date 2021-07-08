@@ -117,7 +117,7 @@ exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{
 # 	Natural scrolling
 exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "natural scrolling enabled (" | awk '{print $5}' | grep -o "[0-9][0-9][0-9]") 1 
 # 	Cursor speed
-exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "accel speed (" | awk '{print $4}' | grep -o "[0-9][0-9][0-9]") 0.60 
+# exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "accel speed (" | awk '{print $4}' | grep -o "[0-9][0-9][0-9]") 0.60 
 # 	Disable touchpad if mouse is plugged in with touchpad-indicator
 # exec_always --no-startup-id touchpad-indicator
 
@@ -145,10 +145,10 @@ bindsym Print exec --no-startup-id flameshot gui
 bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 10
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
 # 	Volume
-bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume 0 -5%
+bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume @DEFAULT_SINK@ -5%
 # 		Mute audio
-bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 # 		Mute microphone
 bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
 

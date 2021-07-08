@@ -10,6 +10,9 @@
 # Start optimus prime offloading
 # /usr/bin/prime-offload
 
+# disable mouse acceleration
+xset m 0 0 &
+
 # numlock on after boot
 numlockx &
 
