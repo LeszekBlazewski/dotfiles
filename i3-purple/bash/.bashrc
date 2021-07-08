@@ -17,4 +17,8 @@ if [ -d "$HOME/.scripts" ] ; then
     export PATH="$PATH:$SCRIPTSPATH"
 fi
 
+# ssh-agent
+eval "$(keychain --eval --quiet --agents ssh,gpg --nogui --noask)"
+
+# starship prompt
 eval "$(starship init bash)"
