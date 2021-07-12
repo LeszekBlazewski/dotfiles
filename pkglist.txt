@@ -40,3 +40,4 @@ xorg-xrandr
 multilockscreen
 xautolock
 keychain
+python-pip

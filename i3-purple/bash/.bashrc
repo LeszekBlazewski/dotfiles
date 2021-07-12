@@ -9,16 +9,24 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 # add scripts to path
+SCRIPTSPATH="$HOME/.scripts"
 
-if [ -d "$HOME/.scripts" ] ; then
-    # set scripts path
-    SCRIPTSPATH="$HOME/.scripts"
-    # include scripts in the path
+if [ -d "$SCRIPTSPATH" ]; then
     export PATH="$PATH:$SCRIPTSPATH"
+fi
+
+# add local user home bin to path
+LOCAL_USER_BIN="$HOME/.local/bin"
+
+if [ -d "$LOCAL_USER_BIN" ]; then
+    export PATH="$PATH:$LOCAL_USER_BIN"
 fi
 
 # ssh-agent
 eval "$(keychain --eval --quiet --agents ssh,gpg --nogui --noask)"
+
+# virtualenvwrapper
+source /home/beard/.local/bin/virtualenvwrapper.sh
 
 # starship prompt
 eval "$(starship init bash)"
