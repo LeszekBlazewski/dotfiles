@@ -33,7 +33,7 @@ red = #E55039
 
 ; ===== Bars =====
 [bar/main]
-monitor = ${env:MONITOR:}
+monitor = ${env:MONITOR}
 bottom = false
 fixed-center = true
 width = 100%
@@ -54,11 +54,12 @@ modules-right = filesystem memory cpu temperature battery backlight volume
 separator = ""
 spacing = 0
 dim-value = 1.0
-tray-position = right
+tray-position = ${env:TRAY_POSITION}
 tray-detached = false
 tray-background = ${colors.background}
 tray-foreground = ${colors.foreground}
 wm-restack = i3
+override-redirect = true
 
 
 ;========= MODULES ==========

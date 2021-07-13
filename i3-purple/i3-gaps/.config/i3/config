@@ -9,14 +9,14 @@
 #   ╚═╝ ╚════╝          ╚════╝ ╚═╝  ╚═╝╚═╝      ╚════╝ 
 #   
 #   
-#   i3-gaps configuration by adipopbv (adi.pop.bv@gmail.com).
+#   i3-gaps configuration by beard
 #   ~/.config/i3/config - i3-gaps settings file.
 #   Go to https://i3wm.org/docs/ for more info.
 #   
 #   
 #===============================================================
 
-# i3 config file (v4)
+# i3 config file
 
 # ===== Variables =====
 
@@ -37,33 +37,35 @@ set $wallpaper $HOME/.config/wallpaper/wallpaper.jpg
 set $audioctl pavucontrol
 
 # Colors
-set $black     "#000000"
-set $darkgrey  "#292929"
-set $grey      "#757575"
-set $lightgrey "#BABABA"
-set $blue      "#5D82A8"
-set $lightblue "#8096AC"
+set $light_purple   "#BD93f9"
+set $dark_blue       "#000088"
+set $dark_black     "#282a36"
+set $white              "#ffffff"
 
 # Corners
 # border_radius 10
 
-# ===== Windows & Containers =====
+# ===== Windows & Containers + Borders (highlight active window)  =====
+
+# hide border when one window on workspace
+hide_edge_borders smart
 
 # Window aesthetic settings
 # 	Font for window titles
 font pango:Noto Sans Regular 14
-# 	Hide window title bars
-for_window [class="^.*"] border pixel 0
+#   Borders
+for_window [class="^.*"] border pixel 2
 # 	Window colors
 # 	<colorclass>        <border>     <background> <text>       <indicator>
 # 		Currently focused window
-client.focused          $black       $lightgrey   $black       $blue
+client.focused $light_purple $light_purple $dark_blue $light_purple
 # 		Focused window from the other containers
-client.focused_inactive $black       $grey        $black       $lightblue
+client.focused_inactive $dark_black $dark_black $white $dark_black 
 # 		Unfocused windows
-client.unfocused        $black       $darkgrey    $black       $darkgrey
+client.unfocused $dark_black $dark_black $white $dark_black 
 # 		Unfocused windows with urgency hint active
-client.urgent           $black       $blue        $black       $black
+client.urgent $light_purple $light_purple $dark_blue $light_purple
+
 
 # ===== Workspaces =====
 
@@ -81,9 +83,6 @@ client.urgent           $black       $blue        $black       $black
 # ===== Programs =====
 
 # Execute commands
-# 	Adjust screens settings
-exec_always --no-startup-id xrandr --output eDP-1 --mode 1920x1080
-exec_always --no-startup-id xrandr --output HDMI-2 --mode 1920x1080 --rate 60 --right-of eDP-1
 # 	Start status bar
 exec_always --no-startup-id $bar
 # 	Set wallpaper
@@ -97,9 +96,6 @@ exec_always --no-startup-id flameshot &
 # Applets
 exec_always  --no-startup-id "nm-applet"
 exec_always --no-startup-id "blueman-applet"
-
-# Execute programs in floating windows
-# for_window [class=".*-custom-class-here"] floating enabled
 
 # auto name workspace
 exec_always --no-startup-id  "$HOME/dotfiles/i3-purple/i3-gaps/.config/i3/i3scripts/venv/bin/python3 $HOME/dotfiles/i3-purple/i3-gaps/.config/i3/i3scripts/autoname_workspaces.py &"
@@ -118,8 +114,6 @@ exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{
 exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "natural scrolling enabled (" | awk '{print $5}' | grep -o "[0-9][0-9][0-9]") 1 
 # 	Cursor speed
 # exec --no-startup-id xinput set-prop $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") $(xinput list-props $(xinput list | grep -i "touchpad" | awk '{print $6}' | grep -o "[0-9][0-9]") | grep -i "accel speed (" | awk '{print $4}' | grep -o "[0-9][0-9][0-9]") 0.60 
-# 	Disable touchpad if mouse is plugged in with touchpad-indicator
-# exec_always --no-startup-id touchpad-indicator
 
 # ===== Bindings =====
 
@@ -148,9 +142,9 @@ bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
 bindsym XF86AudioRaiseVolume exec  --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id  pactl set-sink-volume @DEFAULT_SINK@ -5%
 # 		Mute audio
-bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute @DEFAULT_SINK@ toggle
 # 		Mute microphone
-bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Lock screen
 bindsym $mod+Delete exec --no-startup-id multilockscreen -l
@@ -182,35 +176,6 @@ bindsym $mod+s layout toggle split
 bindsym $mod+Shift+space floating toggle
 # 	Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-# 	Resize window (you can also use the mouse for that)
-mode "resize" {
-	# Normal
-	bindsym Left resize grow left 2 px or 2 ppt
-	bindsym Down resize grow down 2 px or 2 ppt
-	bindsym Up resize grow up 2 px or 2 ppt
-	bindsym Right resize grow right 2 px or 2 ppt
-
-	bindsym Shift+Left resize shrink left 2 px or 2 ppt
-	bindsym Shift+Down resize shrink down 2 px or 2 ppt
-	bindsym Shift+Up resize shrink up 2 px or 2 ppt
-	bindsym Shift+Right resize shrink right 2 px or 2 ppt
-
-	bindsym Ctrl+Left resize grow left 1 px
-	bindsym Ctrl+Down resize grow down 1 px
-	bindsym Ctrl+Up resize grow up 1 px
-	bindsym Ctrl+Right resize grow right 1 px
-
-	bindsym Ctrl+Shift+Left resize shrink left 1 px
-	bindsym Ctrl+Shift+Down resize shrink down 1 px
-	bindsym Ctrl+Shift+Up resize shrink up 1 px
-	bindsym Ctrl+Shift+Right resize shrink right 1 px
-
-	# Back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-# 	Start resizing mode
-bindsym $mod+r mode "resize"
 
 # Workspaces functional settings
 # 	Switch to workspace
@@ -238,18 +203,18 @@ bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
 # Screen functional settings
-# 	Change screen focus
-# 		Normal
-bindsym $mod+Ctrl+Left  focus output left
-bindsym $mod+Ctrl+Down  focus output down
-bindsym $mod+Ctrl+Up    focus output up
-bindsym $mod+Ctrl+Right focus output right
 # 	Move focused workspace to screen
 # 		Normal
 bindsym $mod+Ctrl+Shift+Left  move workspace to output left
 bindsym $mod+Ctrl+Shift+Down  move workspace to output down
 bindsym $mod+Ctrl+Shift+Up    move workspace to output up
 bindsym $mod+Ctrl+Shift+Right move workspace to output right
+
+# Resize window
+bindsym $mod+Ctrl+Left resize grow width 10 px or 10 ppt
+bindsym $mod+Ctrl+Down resize shrink height 10 px or 10 ppt
+bindsym $mod+Ctrl+Up resize grow height 10 px or 10 ppt
+bindsym $mod+Ctrl+Right resize shrink width 10 px or 10 ppt
 
 # i3wm misc
 # 	Reload the configuration file
@@ -264,46 +229,7 @@ bindsym $mod+Shift+r restart
 # 	Set inner gaps
 gaps inner 10
 # 	Set outer gaps
-# gaps outer 0
+gaps outer -10
 
 # Gaps for status bar
-# gaps top 0
-
-smart_borders on
-smart_gaps on
-
-# Gaps adjusting mode
-mode "gaps" {
-	# Adjust inner gap size
-	# 	Normal
-	bindsym Down gaps inner current minus 5
-	bindsym Shift+Down gaps inner current minus 15
-	bindsym Up gaps inner current plus 5
-	bindsym Shift+Up gaps inner current plus 15
-
-	# Adjust outer gaps size
-	# 	Normal
-	bindsym o gaps outer current plus 5
-	bindsym i gaps outer current minus 5
-	# 	Bigger
-	bindsym Shift+o gaps outer current plus 15
-	bindsym Shift+i gaps outer current minus 15
-
-	# Set all gaps to 0
-	bindsym 0 gaps inner current set 0; gaps outer current set 0
-
-	# Back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-# 	Start gaps adjusting mode
-bindsym $mod+g mode "gaps"
-
-# ===== Borders (highlight active window) =====
-
-for_window [class="^.*"] border pixel 2
-
-client.focused #BD93f9 #BD93f9 #000088 #BD93f9
-client.focused_inactive #282a36 #282a36 #ffffff #282a36 
-client.unfocused #282a36 #282a36 #ffffff #282a36 
-client.urgent #BD93f9 #BD93f9 #000088 #BD93f9
+gaps top 20

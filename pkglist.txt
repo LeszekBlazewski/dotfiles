@@ -39,5 +39,5 @@ xorg-xinput
 xorg-xrandr
 multilockscreen
 xautolock
-keychain
 python-pip
+autorandr

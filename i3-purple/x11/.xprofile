@@ -22,13 +22,18 @@
 # /usr/bin/prime-offload
 
 # disable mouse acceleration
-xset m 0 0 &
+xset m 0 0
+
+# keyboard layout for pl
+setxkbmap $(cat .Xkbmap)
 
 # numlock on after boot
 numlockx &
 
-# keyboard layout for pl
-setxkbmap $(cat .Xkbmap) &
+# gnome-keyring
+dbus-update-activation-environment --systemd DISPLAY
+eval $(/usr/bin/gnome-keyring-daemon --start)
+export SSH_AUTH_SOCK
 
 # Start i3 session (needs to be last)
 exec i3

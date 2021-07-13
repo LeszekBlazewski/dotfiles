@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# reload polybar after monitor plug in
+$HOME/.config/polybar/launch-polybar.sh

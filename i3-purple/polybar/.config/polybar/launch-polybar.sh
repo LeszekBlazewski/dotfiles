@@ -1,18 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/env bash
+(
+  flock 200
 
-# Terminate already running bar instances
-killall -q polybar
+  killall -q polybar
 
-# multiple monitors bars
+  while pgrep -u $UID -x polybar > /dev/null; do sleep 0.5; done
 
-if type "xrandr"; then
-  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar main -r &
+  outputs=$(xrandr --query | grep " connected" | cut -d" " -f1)
+  tray_output=$(xrandr --query | grep " connected primary" | cut -d" " -f1)
+ 
+  for m in $outputs; do
+    export MONITOR=$m
+    export TRAY_POSITION=none
+    if [[ "$m" == "$tray_output" ]]; then
+      TRAY_POSITION=right
+    fi
+
+    polybar --reload main </dev/null >/tmp/polybar-$m.log 2>&1 200>&- &
+    disown
   done
-else
-  polybar main -r &
-fi
-
-
-# Example how to redirect output to tmp
-# polybar left-top >> /tmp/polybar-left-top.log 2>&1 &
+) 200>/var/tmp/polybar-launch.lock

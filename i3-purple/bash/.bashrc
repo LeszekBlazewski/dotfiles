@@ -22,9 +22,6 @@ if [ -d "$LOCAL_USER_BIN" ]; then
     export PATH="$PATH:$LOCAL_USER_BIN"
 fi
 
-# ssh-agent
-eval "$(keychain --eval --quiet --agents ssh,gpg --nogui --noask)"
-
 # virtualenvwrapper
 source /home/beard/.local/bin/virtualenvwrapper.sh
 
