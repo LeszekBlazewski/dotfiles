@@ -50,7 +50,7 @@ font-2 = Font Awesome 5 Free Solid:style=Solid;2
 font-3 = Font Awesome 5 Free Regular:style=Regular;2
 modules-left = powermenu date time
 modules-center = i3
-modules-right = filesystem memory cpu temperature battery backlight volume
+modules-right = updates filesystem memory cpu temperature battery backlight volume
 separator = ""
 spacing = 0
 dim-value = 1.0
@@ -293,3 +293,15 @@ format-muted-padding = 0
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
+
+; Show pacman and aur updates
+[module/updates]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/updates.sh
+; Will the script output continous content?
+; Default: false
+tail = true
+format-background = ${colors.background}
+format-foreground = ${colors.background-alt-2}
+;format-overline = ${colors.line}
+click-left = kitty --hold bash -c "echo 'Provide password to procede with updates';yay"
