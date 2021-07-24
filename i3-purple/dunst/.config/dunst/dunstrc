@@ -29,11 +29,11 @@
     # 	The geometry of the window
     # 		[{widthInPx}]x{heightInNotifsCount}[+/-{xOffsetInPx}+/-{yOffsetInPx}]
     #geometry = "500x2-0+35"
-	geometry = "0x1-10+65"
+     geometry = "270x3-10+40"
     # 	Show how many messages are currently hidden (because of geometry)
     indicate_hidden = yes
     # 	Shrink window if it's smaller than the width
-    shrink = false
+    shrink = true
     # 	The transparency of the window (range 0 to 100)
     transparency = 0
     # 	The height of the entire notification
@@ -96,7 +96,7 @@
     # 		Set to -1 to disable
     show_age_threshold = 60
     # 	Split notifications into multiple lines if they don't fit into geometry
-    word_wrap = true
+    word_wrap = yes
     # 	When word_wrap is set to no, specify where to make an ellipsis in long lines
     # 		Possible values are "start", "middle" and "end"
     # ellipsize = middle
