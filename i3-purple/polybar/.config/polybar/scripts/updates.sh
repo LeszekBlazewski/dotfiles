@@ -14,27 +14,10 @@ get_total_updates() {
     updates=$((updates_arch + updates_aur))
 }
 
+get_total_updates
 
-while true; do
-    get_total_updates
-
-    # when there are updates available
-    # every 10 seconds check whether updates are done
-    while [ "$updates" -gt 0 ]; do
-        if [ "$updates" -ge 1 ]; then
-            echo "$BAR_ICON $updates"
-        else
-            echo ""
-        fi
-        sleep 10
-        get_total_updates
-    done
-
-    # when no updates are available, use a longer loop, this saves on CPU
-    # and network uptime, only checking once every 1h for new updates
-    while (( updates == 0 )); do
-        echo ""
-        sleep 3600
-        get_total_updates
-    done
-done
+if [ "$updates" -gt 0 ]; then
+    echo "$BAR_ICON $updates"
+else
+    echo ""
+fi

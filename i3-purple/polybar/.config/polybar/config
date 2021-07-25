@@ -50,7 +50,7 @@ font-2 = Font Awesome 5 Free Solid:style=Solid;2
 font-3 = Font Awesome 5 Free Regular:style=Regular;2
 modules-left = powermenu date time
 modules-center = i3
-modules-right = updates filesystem memory cpu temperature battery backlight volume
+modules-right = updates updates_ipc filesystem memory cpu temperature battery backlight volume
 separator = ""
 spacing = 0
 dim-value = 1.0
@@ -60,6 +60,7 @@ tray-background = ${colors.background}
 tray-foreground = ${colors.foreground}
 wm-restack = i3
 override-redirect = true
+enable-ipc = true
 
 
 ;========= MODULES ==========
@@ -295,13 +296,19 @@ ramp-volume-1 = 
 ramp-volume-2 = 
 
 ; Show pacman and aur updates
-[module/updates]
-type = custom/script
-exec = $HOME/.config/polybar/scripts/updates.sh
-; Will the script output continous content?
-; Default: false
-tail = true
+; Left click -> update packages + notify polybar
+; Right click -> check for packages
+
+[module/updates_ipc]
+type = custom/ipc
 format-background = ${colors.background}
 format-foreground = ${colors.background-alt-2}
-;format-overline = ${colors.line}
-click-left = kitty --hold bash -c "echo 'Provide password to procede with updates';yay"
+hook-0 = $HOME/.config/polybar/scripts/updates.sh
+click-left = kitty --hold bash -c "echo 'Provide password to procede with updates';yay;polybar-msg hook updates_ipc 1 > /dev/null"
+click-right = polybar-msg hook updates_ipc 1 > /dev/null
+
+[module/updates]
+type = custom/script
+exec = polybar-msg hook updates_ipc 1
+interval = 3600
+label =
