@@ -78,6 +78,8 @@ sudo -u $real_user rm -f /home/$real_user/.bashrc /home/$real_user/.bash_profile
 sudo -u $real_user stow * -t ../.. --adopt
 
 # copy and enable grub theme
+# if you see many pci AER errors in dmesg or journalctl when using system
+# add pci=noaer parameter to GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub
 cp -r grub/.config/grub/themes/liquid-amethyst /boot/grub/themes/liquid-amethyst
 sed -i 's|#GRUB_THEME="/path/to/gfxtheme"|GRUB_THEME="/boot/grub/themes/liquid-amethyst/theme.txt"|' /etc/default/grub
 sed -i 's/GRUB_GFXMODE=auto/GRUB_GFXMODE=1920x1080/'   /etc/default/grub
