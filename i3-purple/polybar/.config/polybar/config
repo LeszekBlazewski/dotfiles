@@ -219,7 +219,7 @@ label-warn-foreground = #f00
 [module/battery]
 type = internal/battery
 ; 	Set full status at values > 99%
-full-at = 95
+full-at = 90
 ; 	Set battery and adapter
 battery = BAT1
 adapter = ADP1
