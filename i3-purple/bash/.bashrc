@@ -22,6 +22,11 @@ if [ -d "$LOCAL_USER_BIN" ]; then
     export PATH="$PATH:$LOCAL_USER_BIN"
 fi
 
+# kitty alias for SSH
+if [ "$TERM" = "xterm-kitty" ]; then
+    alias ssh="kitty +kitten ssh"
+fi
+
 # virtualenvwrapper
 source /home/beard/.local/bin/virtualenvwrapper.sh
 
