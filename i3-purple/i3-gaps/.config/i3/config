@@ -221,7 +221,8 @@ bindsym $mod+Ctrl+Right resize shrink width 10 px or 10 ppt
 bindsym $mod+Shift+c reload
 # 	Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-
+# Focus following mouse
+focus_follows_mouse no
 
 # ===== i3-gaps specific =====
 
