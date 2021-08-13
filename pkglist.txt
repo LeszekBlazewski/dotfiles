@@ -42,3 +42,4 @@ xautolock
 python-pip
 autorandr
 pacman-contrib
+bash-completion
