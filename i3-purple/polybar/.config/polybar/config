@@ -294,6 +294,8 @@ format-muted-padding = 0
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
+; right click sound menu (left click mute)
+click-right = pavucontrol
 
 ; Show pacman and aur updates
 ; Left click -> update packages + notify polybar
