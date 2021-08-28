@@ -147,8 +147,8 @@ bindsym XF86AudioMute exec --no-startup-id  pactl set-sink-mute @DEFAULT_SINK@ t
 bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Lock screen
-bindsym $mod+Delete exec --no-startup-id multilockscreen -l
-exec --no-startup-id xautolock -time 10 -locker 'multilockscreen -l' &
+bindsym $mod+Delete exec --no-startup-id betterlockscreen -l -- --layout-pos="ix-1000:iy+1000"
+exec --no-startup-id xautolock -time 10 -corners 0-00 -locker 'betterlockscreen -l -- --layout-pos="ix-1000:iy+1000"' &
 
 # Kill focused window
 bindsym $mod+Shift+q kill

@@ -89,8 +89,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # load gnome dconf settings
 sudo -u $real_user dbus-launch dconf load / < dconf/.config/dconf/dconf.ini
 
-# set multilockscreen image
-sudo -u $real_user multilockscreen -u wallpaper/.config/wallpaper/liquid-amethyst-lock.jpg
+# set betterlockscreen image
+sudo -u $real_user betterlockscreen -u wallpaper/.config/wallpaper/liquid-amethyst-lock.jpg
 
 echo "Customization complete! Automatic reboot in 2 seconds"
 sleep 2 && reboot
