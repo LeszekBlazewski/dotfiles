@@ -155,12 +155,22 @@ bindsym $mod+Shift+q kill
 
 # Windows functional settings
 # 	Change window focus
+# 		Vim-like
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 # 		Normal
 bindsym $mod+Left  focus left
 bindsym $mod+Down  focus down
 bindsym $mod+Up    focus up
 bindsym $mod+Right focus right
 # 	Move focused window
+# 		Vim-like
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 # 		Normal
 bindsym $mod+Shift+Left  move left
 bindsym $mod+Shift+Down  move down
@@ -209,12 +219,25 @@ bindsym $mod+Ctrl+Shift+Left  move workspace to output left
 bindsym $mod+Ctrl+Shift+Down  move workspace to output down
 bindsym $mod+Ctrl+Shift+Up    move workspace to output up
 bindsym $mod+Ctrl+Shift+Right move workspace to output right
+#       Vim-like
+bindsym $mod+Ctrl+Shift+h  move workspace to output left
+bindsym $mod+Ctrl+Shift+j  move workspace to output down
+bindsym $mod+Ctrl+Shift+k    move workspace to output up
+bindsym $mod+Ctrl+Shift+l move workspace to output right
+
+
 
 # Resize window
+# 		Normal
 bindsym $mod+Ctrl+Left resize grow width 10 px or 10 ppt
 bindsym $mod+Ctrl+Down resize shrink height 10 px or 10 ppt
 bindsym $mod+Ctrl+Up resize grow height 10 px or 10 ppt
 bindsym $mod+Ctrl+Right resize shrink width 10 px or 10 ppt
+#       Vim-like
+bindsym $mod+Ctrl+h resize grow width 10 px or 10 ppt
+bindsym $mod+Ctrl+j resize shrink height 10 px or 10 ppt
+bindsym $mod+Ctrl+k resize grow height 10 px or 10 ppt
+bindsym $mod+Ctrl+l resize shrink width 10 px or 10 ppt
 
 # i3wm misc
 # 	Reload the configuration file
