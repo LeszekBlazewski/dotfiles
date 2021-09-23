@@ -1,12 +1,7 @@
 #!/usr/bin/env sh
 
-# necessary to load scripting-addition during startup on macOS Big Sur
-# *yabai --load-sa* is configured to run through sudo without a password
-sudo yabai --load-sa
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-
 # ====
-# Initialization
+# Initializations
 # ====
 
 source ~/.config/yabai/scripts/initialization.sh
@@ -32,8 +27,8 @@ yabai -m rule --add app="Installer" manage=off
 yabai -m rule --add app="Fantastical Helper" manage=off # Fantastical menu bar drop-down menu
 
 # Border on
-yabai -m rule --add app="kitty|Alacritty" border=on
-yabai -m rule --add app="iTerm2" title!="Preferences|Profiles|Updating|^$" border=on
+# yabai -m rule --add app="kitty|Alacritty" border=on
+# yabai -m rule --add app="iTerm2" title!="Preferences|Profiles|Updating|^$" border=on
 
 # ====
 # Signals
@@ -84,10 +79,10 @@ yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
 # Paddings
-yabai -m config top_padding                  5
-yabai -m config bottom_padding               5
-yabai -m config left_padding                 5
-yabai -m config right_padding                5
+#yabai -m config top_padding                  5
+#yabai -m config bottom_padding               5
+#yabai -m config left_padding                 5
+#yabai -m config right_padding                5
 yabai -m config window_gap                   5
 # yabai -m config external_bar                 all:28:0
 

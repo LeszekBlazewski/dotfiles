@@ -30,7 +30,7 @@ hyper - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 # Open a new terminal window
 # cmd - return : /Applications/alacritty.app/Contents/MacOS/alacritty
 # cmd - return : kitty --single-instance -d ~ &> /dev/null
-cmd - return : ~/.config/yabai/scripts/open-iterm.sh
+lalt - return : ~/.config/yabai/scripts/open-iterm.sh
 
 # ========== Changing focus (Left ALT) ========== {{{
 
@@ -65,24 +65,15 @@ lalt - m : [[ $(yabai -m query --windows --window | jq '."zoom-fullscreen"') == 
 
 # Focus workspace
 #   - 1-0:  focus the workspace #1-#10
-#   - [, ]: cycle through the workspaces (support moving the focus across the display)
-#     e.g., 4 | 1 2 | 3 (three displays and currently at 2, using [ to move the focus 2 -> 1 -> 4 -> 3 -> 2, ..., ] is the same but on the opposite direction
-#   - \:    focus the recently-focused workspace
-lalt - 1 : yabai -m space --focus 1
-lalt - 2 : yabai -m space --focus 2
-lalt - 3 : yabai -m space --focus 3
-lalt - 4 : yabai -m space --focus 4
-lalt - 5 : yabai -m space --focus 5
-lalt - 6 : yabai -m space --focus 6
-lalt - 7 : yabai -m space --focus 7
-lalt - 8 : yabai -m space --focus 8
-lalt - 9 : yabai -m space --focus 9
-lalt - 0 : yabai -m space --focus 10
-lalt - 0x21 : yabai -m space --focus $(cur_space=$(yabai -m query --spaces --space | jq -r '.index') && \
-                                      yabai -m query --displays | jq -r "sort_by(.frame.x) | [.[] | .spaces] | flatten | if index($cur_space) == 0 then last else .[index($cur_space) - 1] end")
-lalt - 0x1E : yabai -m space --focus $(cur_space=$(yabai -m query --spaces --space | jq -r '.index') && \
-                                      yabai -m query --displays | jq -r "sort_by(.frame.x) | [.[] | .spaces] | flatten | if index($cur_space) + 1 == length then first else .[index($cur_space) + 1] end")
-lalt - 0x2A : yabai -m space --focus recent
+lalt - 1 : ~/.config/yabai/scripts/focus-space-SIP.sh 1
+lalt - 2 : ~/.config/yabai/scripts/focus-space-SIP.sh 2
+lalt - 3 : ~/.config/yabai/scripts/focus-space-SIP.sh 3
+lalt - 4 : ~/.config/yabai/scripts/focus-space-SIP.sh 4
+lalt - 5 : ~/.config/yabai/scripts/focus-space-SIP.sh 5
+lalt - 6 : ~/.config/yabai/scripts/focus-space-SIP.sh 6
+lalt - 7 : ~/.config/yabai/scripts/focus-space-SIP.sh 7
+lalt - 8 : ~/.config/yabai/scripts/focus-space-SIP.sh 8
+lalt - 9 : ~/.config/yabai/scripts/focus-space-SIP.sh 9
 
 # Focus display
 #   - u, i, o: focus the left display, the middle display, or the right display
@@ -201,11 +192,11 @@ alt + shift - 0x2C : yabai -m window --insert stack
 
 # Create a workspace, move window there and follow focus
 #   - n: create a new workspace at the end (within the current display), move the current window to that workspace, and focus the window
-alt + shift - n : yabai -m space --create && \
-                  index=$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index') && \
-                  cur_window=$(yabai -m query --windows --window | jq '.id') && \
-                  yabai -m window --space ${index} && \
-                  yabai -m window --focus ${cur_window}
+# alt + shift - n : yabai -m space --create && \
+#                   index=$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index') && \
+#                   cur_window=$(yabai -m query --windows --window | jq '.id') && \
+#                   yabai -m window --space ${index} && \
+#                   yabai -m window --focus ${cur_window}
 
 # }}} Window operations
 
@@ -213,41 +204,41 @@ alt + shift - n : yabai -m space --create && \
 
 # Create a workspace and follow focus
 #   -n: create a new workspace at the end (within the current display), and focus the workspace
-alt + ctrl - n : yabai -m space --create && \
-                 index=$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index') && \
-                 yabai -m space --focus ${index}
+# alt + ctrl - n : yabai -m space --create && \
+#                  index=$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index') && \
+#                  yabai -m space --focus ${index}
 
 # Destroy the current workspace, send the windows on this workspace to workspace #1, and focus workspace #1
-alt + ctrl - w : yabai -m space --destroy
+# alt + ctrl - w : yabai -m space --destroy
 
 # Move workspace to display (monitor) and follow focus
 #   - u, i, o: move the current workspace to the left, middle, or right display, and focus that workspace
 #   - z, x:    move the current workspace to the display on the left, on the right (support cycling through), and focus that workspace
 #   - c:       move the current workspace to the recently-focused display, and focus that workspace
-alt + ctrl - u : yabai -m space --display $(yabai -m query --displays | jq 'sort_by(.frame.x) | .[0].index')
-alt + ctrl - i : yabai -m space --display $(yabai -m query --displays | jq 'sort_by(.frame.x) | .[1].index')
-alt + ctrl - o : yabai -m space --display $(yabai -m query --displays | jq 'sort_by(.frame.x) | .[2].index')
-alt + ctrl - z : yabai -m space --display west || \
-                 last=$(yabai -m query --displays | jq 'sort_by(.frame.x) | last.index') && yabai -m space --display ${last}
-alt + ctrl - x : yabai -m space --display east || \
-                 first=$(yabai -m query --displays | jq 'sort_by(.frame.x) | first.index') && yabai -m space --display ${first}
-alt + ctrl - c : yabai -m space --display recent
+# alt + ctrl - u : yabai -m space --display $(yabai -m query --displays | jq 'sort_by(.frame.x) | .[0].index')
+# alt + ctrl - i : yabai -m space --display $(yabai -m query --displays | jq 'sort_by(.frame.x) | .[1].index')
+# alt + ctrl - o : yabai -m space --display $(yabai -m query --displays | jq 'sort_by(.frame.x) | .[2].index')
+# alt + ctrl - z : yabai -m space --display west || \
+#                  last=$(yabai -m query --displays | jq 'sort_by(.frame.x) | last.index') && yabai -m space --display ${last}
+# alt + ctrl - x : yabai -m space --display east || \
+#                  first=$(yabai -m query --displays | jq 'sort_by(.frame.x) | first.index') && yabai -m space --display ${first}
+# alt + ctrl - c : yabai -m space --display recent
 
 # Move workspace to the given position (must be on the same display, all the other workspaces after the position will move backward)
 #   - [, ]: move the current workspace to the previous, or next position
 #   - 1-0:  move the current workspace to the position 1-10
-alt + ctrl - 0x21 : yabai -m space --move prev && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 0x1E : yabai -m space --move next && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 1 : yabai -m space --move 1 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 2 : yabai -m space --move 2 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 3 : yabai -m space --move 3 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 4 : yabai -m space --move 4 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 5 : yabai -m space --move 5 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 6 : yabai -m space --move 6 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 7 : yabai -m space --move 7 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 8 : yabai -m space --move 8 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 9 : yabai -m space --move 9 && open -g 'swiftbar://refreshplugin?name=yabai'
-alt + ctrl - 0 : yabai -m space --move 10 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 0x21 : yabai -m space --move prev && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 0x1E : yabai -m space --move next && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 1 : yabai -m space --move 1 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 2 : yabai -m space --move 2 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 3 : yabai -m space --move 3 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 4 : yabai -m space --move 4 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 5 : yabai -m space --move 5 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 6 : yabai -m space --move 6 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 7 : yabai -m space --move 7 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 8 : yabai -m space --move 8 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 9 : yabai -m space --move 9 && open -g 'swiftbar://refreshplugin?name=yabai'
+# alt + ctrl - 0 : yabai -m space --move 10 && open -g 'swiftbar://refreshplugin?name=yabai'
 
 # Change workspace layout
 #   - b, f, s: chagne the layout of the current workspace to bsp, float, or stack
