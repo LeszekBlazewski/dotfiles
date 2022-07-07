@@ -112,3 +112,12 @@ source $ZSH/oh-my-zsh.sh
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+
+function terragrunt_clean() {
+find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+}
+
+# kubecolor
+alias kubectl=kubecolor
+# make completion work with kubecolor
+compdef kubecolor=kubectl
