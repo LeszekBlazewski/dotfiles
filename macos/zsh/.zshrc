@@ -9,7 +9,7 @@ fi
 export PATH="/usr/local/opt/curl/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/leszekblazewski/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform terragrunt zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,9 +115,17 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 
 function terragrunt_clean() {
 find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+find . -type d -name ".terraform" -prune -exec rm -rf {} \;
+}
+
+function terraform_clean() {
+find . -type d -name ".terraform" -prune -exec rm -rf {} \;
+find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
 }
 
 # kubecolor
+# get zsh complete kubectl
+source <(kubectl completion zsh)
 alias kubectl=kubecolor
 # make completion work with kubecolor
 compdef kubecolor=kubectl
