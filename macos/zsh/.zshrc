@@ -34,7 +34,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+DISABLE_UPDATE_PROMPT="true"
+ZSH_CUSTOM_AUTOUPDATE_QUIET=true
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -77,7 +78,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform terragrunt zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform terragrunt zsh-syntax-highlighting autoupdate zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
