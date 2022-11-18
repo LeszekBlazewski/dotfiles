@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform terragrunt zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -114,6 +114,12 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
 function terragrunt_clean() {
+find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+find . -type d -name ".terraform" -prune -exec rm -rf {} \;
+}
+
+function terraform_clean() {
+find . -type d -name ".terraform" -prune -exec rm -rf {} \;
 find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
 }
 
