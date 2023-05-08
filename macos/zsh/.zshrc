@@ -5,8 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Curl in terminal uses brew version
-export PATH="/usr/local/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/bin:/opt/homebrew/opt/curl/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -78,7 +77,7 @@ ZSH_CUSTOM_AUTOUPDATE_QUIET=true
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform terragrunt zsh-syntax-highlighting autoupdate zsh-autosuggestions)
+plugins=(git aws colored-man-pages docker-compose docker helm kubectl terraform terragrunt zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
