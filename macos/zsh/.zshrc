@@ -114,13 +114,13 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
 function terragrunt_clean() {
-find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
-find . -type d -name ".terraform" -prune -exec rm -rf {} \;
+  find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+  find . -type d -name ".terraform" -prune -exec rm -rf {} \;
 }
 
 function terraform_clean() {
-find . -type d -name ".terraform" -prune -exec rm -rf {} \;
-find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
+  find . -type d -name ".terraform" -prune -exec rm -rf {} \;
+  find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;
 }
 
 # kubecolor
